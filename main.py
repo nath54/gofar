@@ -5,7 +5,6 @@ tex,tey=700,800
 pygame.init()
 fenetre=pygame.display.set_mode([tex,tey])
 pygame.display.set_caption("GOFAR")
-pygame.key.set_repeat(40,30)
 font=pygame.font.SysFont("Serif",20)
 fon2=pygame.font.SysFont("Sans",50)
 #clock = pygame.time.Clock()
@@ -290,6 +289,8 @@ def aff(fps,vaisseau,mis,meter,fn1y,fn2y,score,vens,pause,bonus,nv,nben):
                 v.rect=fenetre.blit( v.img, [v.px,v.py] )
                 if v.tp==2:
                     pygame.draw.rect(fenetre,(250,0,0),(150,15,int(v.armure/v.armure_tot*(tex-250)),20),0)
+                elif v.tp==0:
+                    pygame.draw.rect(fenetre,(250,0,0),(v.px,v.py-5,int(v.armure/v.armure_tot*v.tx),3),0)
         vaisseau.rect=fenetre.blit( vaisseau.img , [vaisseau.px,vaisseau.py] )
         fenetre.blit(font.render("score = "+str(int(score)),20,(210,210,250)) , [5,10] )
         fenetre.blit(font.render("vies = "+str(vaisseau.vie),20,(210,210,250)) , [5,30] )
@@ -301,7 +302,7 @@ def aff(fps,vaisseau,mis,meter,fn1y,fn2y,score,vens,pause,bonus,nv,nben):
         fenetre.blit(font.render("nb ennemis = "+str(int(nben)),20,(210,210,250)) , [5,130] )
         fenetre.blit(font.render("niveau = "+str(int(nv)),20,(210,210,250)) , [5,150] )
     else:
-        fenetre.blit(fon2.render("PAUSE, press 'p' to play",20,(250,210,200)) , [20,tey/2] )
+        fenetre.blit(fon2.render("PAUSE, appuyez 'p' pour jouer",20,(250,210,200)) , [20,tey/2] )
     varm=float(vaisseau.armure)/float(vaisseau.armure_tot)
     vener=float(vaisseau.energy)/float(vaisseau.energy_tot)
     ety=tey-50
@@ -436,15 +437,15 @@ def main_jeu():
     while encour:
         t1=time.time()
         aff(fps,vaisseau,mis,meter,fn1y,fn2y,score,vens,pause,bonus,nv,nben)
-        score,vaer,fn1y,fn2y,mis,vaisseau,meter,vens,nben,taugen,daugen,bonus,dbn,nv=bbb(score,vaer,fn1y,fn2y,mis,vaisseau,meter,limm,vens,nben,taugen,daugen,pause,bonus,dbn,tbn,nv)
+        if not pause: score,vaer,fn1y,fn2y,mis,vaisseau,meter,vens,nben,taugen,daugen,bonus,dbn,nv=bbb(score,vaer,fn1y,fn2y,mis,vaisseau,meter,limm,vens,nben,taugen,daugen,pause,bonus,dbn,tbn,nv)
         verif_key(vaisseau,mis)
         for event in pygame.event.get():
             if event.type==QUIT: encour=False
             elif event.type==KEYDOWN:
                 if event.key==K_ESCAPE: encour=False
                 elif event.key==K_p:
+                    vaisseau.ddg=time.time()
                     pause=not pause
-                    time.sleep(0.5)
         t2=time.time()
         tt=float(t2)-float(t1)
         if tt!=0:
@@ -474,7 +475,7 @@ def main_menu():
     bts=[None]
     fenetre.blit(imgfond1,[0,0])
     bts[0]=pygame.draw.rect(fenetre,(200,200,20),(200,400,200,100),0)
-    fenetre.blit(font.render("play",20,(250,0,0)),[250,415])
+    fenetre.blit(font.render("Jouer",20,(250,0,0)),[250,415])
     pygame.display.update()
     while encourme:
         for event in pygame.event.get():
