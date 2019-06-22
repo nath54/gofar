@@ -16,6 +16,8 @@ imgmeteor=pygame.image.load("images/meteor.png")
 imgv=pygame.image.load("images/vaisseau.png")
 imgven0=pygame.image.load("images/ven0.png")
 imgven1=pygame.image.load("images/ven1.png")
+imgven2=pygame.image.load("images/ven2.png")
+imgven3=pygame.image.load("images/ven3.png")
 imgboss1=pygame.image.load("images/boss1.png")
 imgb1=pygame.image.load("images/bonus1.png")
 imgb2=pygame.image.load("images/bonus2.png")
@@ -23,6 +25,18 @@ imgb3=pygame.image.load("images/bonus3.png")
 imgb4=pygame.image.load("images/bonus4.png")
 
 bonuses=[["nb mis",1,imgb1],["speed mis",2,imgb2],["energy+",3,imgb3],["armure+",4,imgb4]]
+
+venstps=[]
+venstps.append( [30,30,imgven0,3,1,0.01,0.75,1,(250,0,100),25,10,1,2,8,5] )
+venstps.append( [40,40,imgven1,4,1.25,0.01,0.70,2,(250,0,100),35,11,2,2,8,5] )
+venstps.append( [50,50,imgven2,5,1.5,0.01,0.65,3,(250,0,100),50,12,4,2,8,5] )
+venstps.append( [60,60,imgven3,6,1.75,0.01,0.50,4,(250,0,100),60,13,6,2,8,5] )
+
+bosstps=[]
+bosstps.append( [200,200,imgboss1,5,0,0.01,2,50,(250,200,0),2000,8,2,7,14,9] )
+bosstps.append( [200,200,imgboss1,6,0,0.01,2,50,(250,200,0),4000,10,3,7,14,9] )
+bosstps.append( [200,200,imgboss1,7,0,0.01,1.5,50,(250,200,0),6000,12,4,7,14,9] )
+
 
 ##############Astéroide##############
 
@@ -64,23 +78,24 @@ class Missil:
         self.rect=pygame.Rect(self.px,self.py,self.tx,self.ty)
         self.cl=cl
     def update(self,asts,vaisseaux):
-        if time.time()-self.dbg>=self.tbg:
-            self.dbg=time.time()
-            self.px+=self.vitx
-            self.py+=self.vity
-        for a in asts:
-            if self.rect.colliderect(a.rect):
-                self.destroy=True
-                a.destroy=True
-        for v in vaisseaux:
-            if not self.destroy and v.tp!=self.pos:
-                if self.rect.colliderect(v.rect):
-                    v.armure-=self.dg
-                    if self.pos==0:
-                        v.ddg=time.time()
+        if not self.destroy:
+            if time.time()-self.dbg>=self.tbg:
+                self.dbg=time.time()
+                self.px+=self.vitx
+                self.py+=self.vity
+            for a in asts:
+                if self.rect.colliderect(a.rect):
                     self.destroy=True
-        if time.time()-self.tim>=self.tps:
-            self.destroy=True
+                    a.destroy=True
+            for v in vaisseaux:
+                if v.tp!=self.pos:
+                    if self.rect.colliderect(v.rect):
+                        v.armure-=self.dg
+                        if self.pos in [0,2]:
+                            v.ddg=time.time()
+                        self.destroy=True
+            if time.time()-self.tim>=self.tps:
+                self.destroy=True
 
 ##############vaisseau##############
 
@@ -110,7 +125,8 @@ class Vaisso:
         self.amttir=0
         self.amttirmax=49
         self.nbmis=1
-        self.maxnbmis=5
+        self.maxnbmis=7
+        self.amdg=0
         self.img=pygame.transform.scale(imgv,[self.tx,self.ty])
         self.rect=pygame.Rect(self.px,self.py,self.tx,self.ty)
         self.dbg=time.time()
@@ -139,47 +155,41 @@ class Vaisso:
             if time.time()-self.dtir>=self.ttir and self.energy>self.mce:
                 self.dtir=time.time()
                 self.energy-=self.mce
-                if self.nbmis==1:
-                    mis.append(Missil(self.px+self.tx/2,self.py+self.ty/2,self.mtx,self.mty,0,self.mvity,self.mdg,1,self.mtps,self.mcl))
-                elif self.nbmis==2:
-                    mis.append(Missil(self.px+self.tx/4,self.py+self.ty/2,self.mtx,self.mty,-1,self.mvity,self.mdg,1,self.mtps,self.mcl))
-                    mis.append(Missil(self.px+self.tx/4*3,self.py+self.ty/2,self.mtx,self.mty,1,self.mvity,self.mdg,1,self.mtps,self.mcl))
-                elif self.nbmis==3:
-                    mis.append(Missil(self.px+self.tx/4,self.py+self.ty/2,self.mtx,self.mty,-1,self.mvity,self.mdg,1,self.mtps,self.mcl))
-                    mis.append(Missil(self.px+self.tx/2,self.py+self.ty/2,self.mtx,self.mty,0,self.mvity,self.mdg,1,self.mtps,self.mcl))
-                    mis.append(Missil(self.px+self.tx/4*3,self.py+self.ty/2,self.mtx,self.mty,1,self.mvity,self.mdg,1,self.mtps,self.mcl))
-                elif self.nbmis==4:
-                    mis.append(Missil(self.px+self.tx/4*0,self.py+self.ty/2,self.mtx,self.mty,-2,self.mvity,self.mdg,1,self.mtps,self.mcl))
-                    mis.append(Missil(self.px+self.tx/4*1,self.py+self.ty/2,self.mtx,self.mty,-1,self.mvity,self.mdg,1,self.mtps,self.mcl))
-                    mis.append(Missil(self.px+self.tx/4*3,self.py+self.ty/2,self.mtx,self.mty,1,self.mvity,self.mdg,1,self.mtps,self.mcl))
-                    mis.append(Missil(self.px+self.tx/4*4,self.py+self.ty/2,self.mtx,self.mty,2,self.mvity,self.mdg,1,self.mtps,self.mcl))
-                else:
-                    mis.append(Missil(self.px+self.tx/4*0,self.py+self.ty/2,self.mtx,self.mty,-2,self.mvity,self.mdg,1,self.mtps,self.mcl))
-                    mis.append(Missil(self.px+self.tx/4*1,self.py+self.ty/2,self.mtx,self.mty,-1,self.mvity,self.mdg,1,self.mtps,self.mcl))
-                    mis.append(Missil(self.px+self.tx/4*2,self.py+self.ty/2,self.mtx,self.mty,0,self.mvity,self.mdg,1,self.mtps,self.mcl))
-                    mis.append(Missil(self.px+self.tx/4*3,self.py+self.ty/2,self.mtx,self.mty,1,self.mvity,self.mdg,1,self.mtps,self.mcl))
-                    mis.append(Missil(self.px+self.tx/4*4,self.py+self.ty/2,self.mtx,self.mty,2,self.mvity,self.mdg,1,self.mtps,self.mcl))
+                mil=int(self.nbmis/2.)
+                divtx=self.nbmis+1
+                for x in range(self.nbmis):
+                    mis.append(Missil(  self.px+self.tx/divtx*(x+1) , self.py+self.ty/2  ,self.mtx,self.mty,x-mil,self.mvity,self.mdg,1,self.mtps,self.mcl))
+                
         return mis
 
-class Vsen0:
-    def __init__(self):
-        self.tp,self.tx,self.ty=0,30,30
+class Vsen:
+    def __init__(self,tp):
+        vtp=tp
+        self.tp,self.tx,self.ty=0,vtp[0],vtp[1]
         self.px=random.randint(self.tx,tex-self.tx)
         self.py=random.randint(-tey,0)
-        self.img=pygame.transform.scale(imgven0,[self.tx,self.ty])
-        self.vit,self.acc=3,1
-        self.dbg,self.tbg=time.time(),0.01
-        self.dtr,self.ttr=time.time(),0.75
-        self.dg=1
-        self.cl=(250,0,100)
         self.rect=pygame.Rect(self.px,self.py,self.tx,self.ty)
-        self.armure_tot=25
+        self.img=pygame.transform.scale(vtp[2],[self.tx,self.ty])
+        self.vit,self.acc=vtp[3],vtp[4]
+        self.dbg,self.tbg=time.time(),vtp[5]
+        self.dtr,self.ttr=time.time(),vtp[6]
+        self.dg=vtp[7]
+        self.cl=vtp[8]
+        self.armure_tot=vtp[9]
         self.armure=self.armure_tot
+        self.mvit=vtp[10]
+        self.nbmis=vtp[11]
+        self.mtx=vtp[12]
+        self.mty=vtp[13]
+        self.mtps=vtp[14]
     def tirer(self,mis):
         if time.time()-self.dtr >= self.ttr:
             self.dtr=time.time()
-            mis.append( Missil(self.px+self.tx/2,self.py,3/2,8,0,10,self.dg,0,6,self.cl) )
-    def bouger(self,mis):
+            mil=int(self.nbmis/2.)
+            divtx=self.nbmis+1
+            for x in range(self.nbmis):
+                mis.append( Missil( self.px+self.tx/divtx*(x+1) , self.py+self.ty/2  , self.mtx , self.mty , x-mil , self.mvit , self.dg , 0 , self.mtps , self.cl ))
+    def bouger(self,mis,vaisseau):
         if time.time()-self.dbg>=self.tbg:
             self.dbg=time.time()
             self.px+=random.randint(-self.vit,self.vit)
@@ -188,126 +198,41 @@ class Vsen0:
             if self.px>tex-self.tx: self.px=tex-self.tx
             self.tirer(mis)
 
-
-class Vsen1:
-    def __init__(self):
-        self.tp,self.tx,self.ty=0,50,50
-        self.px=random.randint(self.tx,tex-self.tx)
-        self.py=random.randint(-tey,0)
-        self.img=pygame.transform.scale(imgven1,[self.tx,self.ty])
-        self.vit,self.acc=5,2
-        self.dbg,self.tbg=time.time(),0.01
-        self.dtr,self.ttr=time.time(),0.5
-        self.dg=1
-        self.cl=(250,0,100)
-        self.rect=pygame.Rect(self.px,self.py,self.tx,self.ty)
-        self.armure_tot=25
-        self.armure=self.armure_tot
-    def tirer(self,mis):
-        if time.time()-self.dtr >= self.ttr:
-            self.dtr=time.time()
-            mis.append( Missil(self.px+self.tx/4*1,self.py+self.ty/2,3/2,8,0,10,self.dg,0,6,self.cl) )
-            mis.append( Missil(self.px+self.tx/4*3,self.py+self.ty/2,3/2,8,0,10,self.dg,0,6,self.cl) )
-    def bouger(self,mis):
-        if time.time()-self.dbg>=self.tbg:
-            self.dbg=time.time()
-            self.px+=random.randint(-self.vit,self.vit)
-            self.py+=self.acc
-            if self.px<0: self.px=0
-            if self.px>tex-self.tx: self.px=tex-self.tx
-            self.tirer(mis)
-
-class Vsen2:
-    def __init__(self):
-        self.tp,self.tx,self.ty=0,60,60
-        self.px=random.randint(self.tx,tex-self.tx)
-        self.py=random.randint(-tey,0)
-        self.img=pygame.transform.scale(imgven1,[self.tx,self.ty])
-        self.vit,self.acc=5,2
-        self.dbg,self.tbg=time.time(),0.005
-        self.dtr,self.ttr=time.time(),0.4
-        self.dg=1
-        self.cl=(250,0,100)
-        self.rect=pygame.Rect(self.px,self.py,self.tx,self.ty)
-        self.armure_tot=30
-        self.armure=self.armure_tot
-    def tirer(self,mis):
-        if time.time()-self.dtr >= self.ttr:
-            self.dtr=time.time()
-            mis.append( Missil(self.px+self.tx/5*1,self.py+self.ty/2,3/2,8,0,10,self.dg,0,6,self.cl) )
-            mis.append( Missil(self.px+self.tx/5*2,self.py+self.ty/2,3/2,8,0,10,self.dg,0,6,self.cl) )
-            mis.append( Missil(self.px+self.tx/5*3,self.py+self.ty/2,3/2,8,0,10,self.dg,0,6,self.cl) )
-            mis.append( Missil(self.px+self.tx/5*4,self.py+self.ty/2,3/2,8,0,10,self.dg,0,6,self.cl) )
-    def bouger(self,mis):
-        if time.time()-self.dbg>=self.tbg:
-            self.dbg=time.time()
-            self.px+=random.randint(-self.vit,self.vit)
-            self.py+=self.acc
-            if self.px<0: self.px=0
-            if self.px>tex-self.tx: self.px=tex-self.tx
-            self.tirer(mis)
-
-class Vsen3:
-    def __init__(self):
-        self.tp,self.tx,self.ty=0,70,70
-        self.px=random.randint(self.tx,tex-self.tx)
-        self.py=random.randint(-tey,0)
-        self.img=pygame.transform.scale(imgven1,[self.tx,self.ty])
-        self.vit,self.acc=5,2
-        self.dbg,self.tbg=time.time(),0.005
-        self.dtr,self.ttr=time.time(),0.4
-        self.dg=1
-        self.cl=(250,0,100)
-        self.rect=pygame.Rect(self.px,self.py,self.tx,self.ty)
-        self.armure_tot=35
-        self.armure=self.armure_tot
-    def tirer(self,mis):
-        if time.time()-self.dtr >= self.ttr:
-            self.dtr=time.time()
-            mis.append( Missil(self.px+self.tx/6*1,self.py+self.ty/2,3/2,8,0,10,self.dg,0,6,self.cl) )
-            mis.append( Missil(self.px+self.tx/6*2,self.py+self.ty/2,3/2,8,0,10,self.dg,0,6,self.cl) )
-            mis.append( Missil(self.px+self.tx/6*3,self.py+self.ty/2,3/2,8,0,10,self.dg,0,6,self.cl) )
-            mis.append( Missil(self.px+self.tx/6*4,self.py+self.ty/2,3/2,8,0,10,self.dg,0,6,self.cl) )
-            mis.append( Missil(self.px+self.tx/6*5,self.py+self.ty/2,3/2,8,0,10,self.dg,0,6,self.cl) )
-    def bouger(self,mis):
-        if time.time()-self.dbg>=self.tbg:
-            self.dbg=time.time()
-            self.px+=random.randint(-self.vit,self.vit)
-            self.py+=self.acc
-            if self.px<0: self.px=0
-            if self.px>tex-self.tx: self.px=tex-self.tx
-            self.tirer(mis)
-
-
-class Boss1:
-    def __init__(self):
-        self.tp,self.tx,self.ty=2,200,200
+class Boss:
+    def __init__(self,tp):
+        vtp=tp
+        self.tp,self.tx,self.ty=2,vtp[0],vtp[1]
         self.px=random.randint(self.tx,tex-self.tx)
         self.py=random.randint(0,tey/5)
-        self.img=pygame.transform.scale(imgboss1,[self.tx,self.ty])
-        self.vit,self.acc=1,0
-        self.dbg,self.tbg=time.time(),0.001
-        self.dtr,self.ttr=time.time(),2
-        self.dg=25
-        self.cl=(250,200,0)
-        self.rect=pygame.Rect(self.px,self.py,self.tx,self.ty)
-        self.armure_tot=1000
+        self.img=pygame.transform.scale(vtp[2],[self.tx,self.ty])
+        self.vit,self.acc=vtp[3],vtp[4]
+        self.dbg,self.tbg=time.time(),vtp[5]
+        self.dtr,self.ttr=time.time(),vtp[6]
+        self.dg=vtp[7]
+        self.cl=vtp[8]
+        self.armure_tot=vtp[9]
         self.armure=self.armure_tot
+        self.mvit=vtp[10]
+        self.nbmis=vtp[11]
+        self.mtx=vtp[12]
+        self.mty=vtp[13]
+        self.mtps=vtp[14]
     def tirer(self,mis):
         if time.time()-self.dtr >= self.ttr:
             self.dtr=time.time()
-            mis.append( Missil(self.px+self.tx/5*1,self.py,7,15,0,10,self.dg,2,6,self.cl) )
-            mis.append( Missil(self.px+self.tx/5*3,self.py,7,15,0,10,self.dg,2,6,self.cl) )
-    def bouger(self,mis):
+            mil=int(self.nbmis/2.)
+            divtx=self.nbmis+1
+            for x in range(self.nbmis):
+                mis.append( Missil( self.px+self.tx/divtx*(x+1) , self.py+self.ty/2  , self.mtx , self.mty , x-mil , self.mvit , self.dg , 2 , self.mtps , self.cl ))
+    def bouger(self,mis,vaisseau):
         if time.time()-self.dbg>=self.tbg:
             self.dbg=time.time()
-            self.px+=random.randint(-self.vit,self.vit)
-            self.py+=self.acc
+            if vaisseau.px>self.px: depx=self.vit
+            else: depx=-self.vit
+            self.px+=depx
             if self.px<0: self.px=0
             if self.px>tex-self.tx: self.px=tex-self.tx
             self.tirer(mis)
-
-
 
 class Bonus:
     def __init__(self,acc):
@@ -330,6 +255,9 @@ class Bonus:
         if not self.destroy and self.rect.colliderect(vaisseau.rect):
             if self.effet==1:
                 if vaisseau.nbmis<5: vaisseau.nbmis+=1
+                else:
+                    vaisseau.amdg+=1
+                    vaisseau.mdg+=1
             elif self.effet==2:
                 if vaisseau.ttir>0.01:
                     vaisseau.ttir-=0.01
@@ -367,7 +295,8 @@ def aff(fps,vaisseau,mis,meter,fn1y,fn2y,score,vens,pause,bonus,nv,nben):
         fenetre.blit(font.render("vitesse = "+str(vaisseau.acc)[:3],20,(210,210,250)) , [5,50] )
         fenetre.blit(font.render("fps = "+str(fps),20,(210,210,250)) , [5,70] )
         fenetre.blit(font.render("vitesse tir = "+str(vaisseau.amttir)+"/"+str(vaisseau.amttirmax),20,(210,210,250)) , [5,90] )
-        fenetre.blit(font.render("nb missiles = "+str(vaisseau.nbmis)+"/"+str(vaisseau.maxnbmis),20,(210,210,250)) , [5,110] )
+        txtm="nb missiles = "+str(vaisseau.nbmis)+"/"+str(vaisseau.maxnbmis)+" ( +"+str(vaisseau.amdg)+"dg)"
+        fenetre.blit(font.render(txtm,20,(210,210,250)) , [5,110] )
         fenetre.blit(font.render("nb ennemis = "+str(int(nben)),20,(210,210,250)) , [5,130] )
         fenetre.blit(font.render("niveau = "+str(int(nv)),20,(210,210,250)) , [5,150] )
     else:
@@ -404,26 +333,32 @@ def bbb(score,vaer,fn1y,fn2y,mis,vaisseau,meter,limm,vens,nben,taugen,daugen,pau
         meter.append( Meteor(random.randint(0,tex),random.randint(-tey,0),random.randint(15,50),random.randint(15,40),random.randint(int(vaisseau.acc)-1,int(vaisseau.acc)+2)) )
     #vens
     while len(vens)<nben and time.time()-daugen<taugen:
-        if nv==0: vens.append( Vsen0() )
-        elif nv==1: vens.append( Vsen1() )
-        elif nv==1: vens.append( Vsen2() )
-        else: vens.append( Vsen3() )
+        if nv<len(venstps):
+            vens.append( Vsen(venstps[nv]) )
+        else:
+            vv=Vsen(venstps[len(venstps)-1])
+            vv.vie+=(len(venstps)-1-nv)*5
+            vv.dg+=(len(venstps)-1-nv)
+            vens.append( vv )
     for v in vens:
-        v.bouger(mis)
+        v.bouger(mis,vaisseau)
         if v.armure<=0:
             del(vens[vens.index(v)])
-            score+=100*nben*vaisseau.acc
+            if v.tp==0: score+=250*nben*vaisseau.acc
+            elif v.tp==2: score+=2500*vaisseau.acc
         if v.py>=tey:
             if v in vens: del(vens[vens.index(v)])
     if time.time()-daugen>=taugen and len(vens)==0:
         daugen=time.time()
         if nben<5: nben+=1
         else:
-            if nv==0: vens.append( Boss1() )
-            elif nv==1: vens.append( Boss1() )
-            elif nv==2: vens.append( Boss1() )
-            elif nv==3: vens.append( Boss1() )
-            else: vens.append( Boss1() ) 
+            if nv<len(bosstps):
+                vens.append( Boss(bosstps[nv]) )
+            else:
+                bb=bosstps[len(bosstps)-1]
+                bb.vie+=(len(bosstps)-1-nv)*2000
+                bb.nbmis+=(len(bosstps)-1-nv)
+                vens.append( Boss(bb) ) 
             nv+=1
             nben=0
     #bonus
@@ -481,9 +416,9 @@ def main_jeu():
     limm=10
     meter=[]
     #ven
-    nben=5
+    nben=1
     taugen=35
-    daugen=0#time.time()
+    daugen=time.time()
     nv=0
     vens=[]
     #bonus
