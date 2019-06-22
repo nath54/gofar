@@ -464,8 +464,8 @@ def main_jeu():
         for event in pygame.event.get():
             if event.type==QUIT: encour2=False
             elif event.type==KEYDOWN:
-                if event.key==K_a: encour2=False
-                if event.key==K_q: encour2=False
+                if event.key==K_ESCAPE: encour2=False
+                if event.key==K_SPACE: encour2=False
 
 
 #######menu
