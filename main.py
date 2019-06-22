@@ -290,7 +290,9 @@ def bbb(score,vaer,fn1y,fn2y,mis,vaisseau,meter,limm,vens,nben,taugen,daugen,pau
         daugen=time.time()
         if nben<5: nben+=1
     #bonus
-    if time.time()-dbn>=tbn: bonus.append( Bonus(vaisseau.acc) )
+    if time.time()-dbn>=tbn:
+        dbn=time.time()
+        bonus.append( Bonus(vaisseau.acc) )
     for b in bonus:
         if not b.destroy and b.py<tey:
             b.update(vaisseau)
@@ -317,7 +319,7 @@ def bbb(score,vaer,fn1y,fn2y,mis,vaisseau,meter,limm,vens,nben,taugen,daugen,pau
     fn2y+=float(float(vaisseau.acc)/2.0)
     if fn1y >= tey: fn1y=-tey
     if fn2y >= tey: fn2y=-tey
-    return score,vaer,fn1y,fn2y,mis,vaisseau,meter,vens,nben,taugen,daugen,bonus
+    return score,vaer,fn1y,fn2y,mis,vaisseau,meter,vens,nben,taugen,daugen,bonus,dbn
     
 
 def verif_key(vaisseau,mis):
@@ -354,7 +356,7 @@ def main_jeu():
     while encour:
         t1=time.time()
         aff(fps,vaisseau,mis,meter,fn1y,fn2y,score,vens,pause,bonus)
-        score,vaer,fn1y,fn2y,mis,vaisseau,meter,vens,nben,taugen,daugen,bonus=bbb(score,vaer,fn1y,fn2y,mis,vaisseau,meter,limm,vens,nben,taugen,daugen,pause,bonus,dbn,tbn)
+        score,vaer,fn1y,fn2y,mis,vaisseau,meter,vens,nben,taugen,daugen,bonus,dbn=bbb(score,vaer,fn1y,fn2y,mis,vaisseau,meter,limm,vens,nben,taugen,daugen,pause,bonus,dbn,tbn)
         verif_key(vaisseau,mis)
         for event in pygame.event.get():
             if event.type==QUIT: encour=False
