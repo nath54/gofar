@@ -258,7 +258,7 @@ def aff(fps,vaisseau,mis,meter,fn1y,fn2y,score,vens,pause,bonus):
 
 ##############gestion du jeu##############
 
-def bbb(score,vaer,fn1y,fn2y,mis,vaisseau,meter,limm,vens,nben,taugen,daugen,pause,bonus):
+def bbb(score,vaer,fn1y,fn2y,mis,vaisseau,meter,limm,vens,nben,taugen,daugen,pause,bonus,dbn,tbn):
     score+=vaisseau.acc
     #meter
     for m in meter:
@@ -354,7 +354,7 @@ def main_jeu():
     while encour:
         t1=time.time()
         aff(fps,vaisseau,mis,meter,fn1y,fn2y,score,vens,pause,bonus)
-        score,vaer,fn1y,fn2y,mis,vaisseau,meter,vens,nben,taugen,daugen,bonus=bbb(score,vaer,fn1y,fn2y,mis,vaisseau,meter,limm,vens,nben,taugen,daugen,pause,bonus)
+        score,vaer,fn1y,fn2y,mis,vaisseau,meter,vens,nben,taugen,daugen,bonus=bbb(score,vaer,fn1y,fn2y,mis,vaisseau,meter,limm,vens,nben,taugen,daugen,pause,bonus,dbn,tbn)
         verif_key(vaisseau,mis)
         for event in pygame.event.get():
             if event.type==QUIT: encour=False
