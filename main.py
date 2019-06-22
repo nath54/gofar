@@ -204,6 +204,7 @@ class Boss:
         self.tp,self.tx,self.ty=2,vtp[0],vtp[1]
         self.px=random.randint(self.tx,tex-self.tx)
         self.py=random.randint(0,tey/5)
+        self.rect=pygame.Rect(self.px,self.py,self.tx,self.ty)
         self.img=pygame.transform.scale(vtp[2],[self.tx,self.ty])
         self.vit,self.acc=vtp[3],vtp[4]
         self.dbg,self.tbg=time.time(),vtp[5]
@@ -254,7 +255,7 @@ class Bonus:
             self.py+=self.acc
         if not self.destroy and self.rect.colliderect(vaisseau.rect):
             if self.effet==1:
-                if vaisseau.nbmis<5: vaisseau.nbmis+=1
+                if vaisseau.nbmis<vaisseau.maxnbmis: vaisseau.nbmis+=1
                 else:
                     vaisseau.amdg+=1
                     vaisseau.mdg+=1
