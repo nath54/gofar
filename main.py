@@ -16,6 +16,7 @@ imgmeteor=pygame.image.load("images/meteor.png")
 imgv=pygame.image.load("images/vaisseau.png")
 imgven0=pygame.image.load("images/ven0.png")
 imgven1=pygame.image.load("images/ven1.png")
+imgboss1=pygame.image.load("images/boss1.png")
 imgb1=pygame.image.load("images/bonus1.png")
 imgb2=pygame.image.load("images/bonus2.png")
 imgb3=pygame.image.load("images/bonus3.png")
@@ -277,6 +278,37 @@ class Vsen3:
             if self.px>tex-self.tx: self.px=tex-self.tx
             self.tirer(mis)
 
+
+class Boss1:
+    def __init__(self):
+        self.tp,self.tx,self.ty=2,200,200
+        self.px=random.randint(self.tx,tex-self.tx)
+        self.py=random.randint(0,tey/5)
+        self.img=pygame.transform.scale(imgboss1,[self.tx,self.ty])
+        self.vit,self.acc=1,0
+        self.dbg,self.tbg=time.time(),0.001
+        self.dtr,self.ttr=time.time(),2
+        self.dg=25
+        self.cl=(250,200,0)
+        self.rect=pygame.Rect(self.px,self.py,self.tx,self.ty)
+        self.armure_tot=1000
+        self.armure=self.armure_tot
+    def tirer(self,mis):
+        if time.time()-self.dtr >= self.ttr:
+            self.dtr=time.time()
+            mis.append( Missil(self.px+self.tx/5*1,self.py,7,15,0,10,self.dg,2,6,self.cl) )
+            mis.append( Missil(self.px+self.tx/5*3,self.py,7,15,0,10,self.dg,2,6,self.cl) )
+    def bouger(self,mis):
+        if time.time()-self.dbg>=self.tbg:
+            self.dbg=time.time()
+            self.px+=random.randint(-self.vit,self.vit)
+            self.py+=self.acc
+            if self.px<0: self.px=0
+            if self.px>tex-self.tx: self.px=tex-self.tx
+            self.tirer(mis)
+
+
+
 class Bonus:
     def __init__(self,acc):
         bn=bonuses[random.choice([0,1,1,1,2,2,2,2,3,3,3,3])]
@@ -327,6 +359,8 @@ def aff(fps,vaisseau,mis,meter,fn1y,fn2y,score,vens,pause,bonus,nv,nben):
         for v in vens:
             if v.px>=0-v.tx and v.px <= tex+v.tx and v.py>=0-v.ty and v.py <= tey+v.ty:
                 v.rect=fenetre.blit( v.img, [v.px,v.py] )
+                if v.tp==2:
+                    pygame.draw.rect(fenetre,(250,0,0),(150,15,int(v.armure/v.armure_tot*(tex-250)),20),0)
         vaisseau.rect=fenetre.blit( vaisseau.img , [vaisseau.px,vaisseau.py] )
         fenetre.blit(font.render("score = "+str(int(score)),20,(210,210,250)) , [5,10] )
         fenetre.blit(font.render("vies = "+str(vaisseau.vie),20,(210,210,250)) , [5,30] )
@@ -369,7 +403,7 @@ def bbb(score,vaer,fn1y,fn2y,mis,vaisseau,meter,limm,vens,nben,taugen,daugen,pau
     while len(meter)<=limm:
         meter.append( Meteor(random.randint(0,tex),random.randint(-tey,0),random.randint(15,50),random.randint(15,40),random.randint(int(vaisseau.acc)-1,int(vaisseau.acc)+2)) )
     #vens
-    while len(vens)<nben:
+    while len(vens)<nben and time.time()-daugen<taugen:
         if nv==0: vens.append( Vsen0() )
         elif nv==1: vens.append( Vsen1() )
         elif nv==1: vens.append( Vsen2() )
@@ -381,10 +415,15 @@ def bbb(score,vaer,fn1y,fn2y,mis,vaisseau,meter,limm,vens,nben,taugen,daugen,pau
             score+=100*nben*vaisseau.acc
         if v.py>=tey:
             if v in vens: del(vens[vens.index(v)])
-    if time.time()-daugen>=taugen:
+    if time.time()-daugen>=taugen and len(vens)==0:
         daugen=time.time()
         if nben<5: nben+=1
         else:
+            if nv==0: vens.append( Boss1() )
+            elif nv==1: vens.append( Boss1() )
+            elif nv==2: vens.append( Boss1() )
+            elif nv==3: vens.append( Boss1() )
+            else: vens.append( Boss1() ) 
             nv+=1
             nben=0
     #bonus
@@ -442,9 +481,9 @@ def main_jeu():
     limm=10
     meter=[]
     #ven
-    nben=1
+    nben=5
     taugen=35
-    daugen=time.time()
+    daugen=0#time.time()
     nv=0
     vens=[]
     #bonus
@@ -482,7 +521,7 @@ def main_jeu():
         encour2=True
     fenetre.blit(font.render("VOUS ETES MORT",20,(210,100,250)) , [tex/3,tey/2] )
     fenetre.blit(font.render("score = "+str(int(score)),20,(100,210,250)) , [tex/3,tey/2+100] )
-    fenetre.blit(font.render("APPUYEZ SUR 'q' pour quitter",20,(210,210,100)) , [tex/3,tey/2+200] )
+    fenetre.blit(font.render("APPUYEZ SUR 'ESPACE' POUR QUITTER",20,(210,210,100)) , [tex/3,tey/2+200] )
     pygame.display.update()
     while encour2:
         for event in pygame.event.get():
@@ -513,15 +552,6 @@ def main_menu():
                         di=bts.index(b)
                         if di==0:
                             main_jeu()
-
-
-
-
-
-
-
-
-
 
 main_menu()
 
