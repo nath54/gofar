@@ -2,7 +2,6 @@
 import random,pygame,time
 from pygame.locals import *
 tex,tey=700,800
-pause=False
 pygame.init()
 fenetre=pygame.display.set_mode([tex,tey])
 pygame.display.set_caption("GOFAR")
@@ -160,7 +159,7 @@ class Vsen1:
 
 ##############affichage##############
 
-def aff(fps,vaisseau,mis,meter,fn1y,fn2y,score,vens):
+def aff(fps,vaisseau,mis,meter,fn1y,fn2y,score,vens,pause):
     if not pause:
         fenetre.blit( imgfond1 , [0,fn1y] )
         fenetre.blit( imgfond2 , [0,fn2y] )
@@ -178,7 +177,7 @@ def aff(fps,vaisseau,mis,meter,fn1y,fn2y,score,vens):
         fenetre.blit(font.render("vitesse = "+str(vaisseau.acc)[:3],20,(210,210,250)) , [5,50] )
         fenetre.blit(font.render("fps = "+str(fps),20,(210,210,250)) , [5,70] )
     else:
-        fenetre.blit(fon2.render("PAUSE, press 'p' to play",20,(250,210,200)) , [tex/3,tey/2] )
+        fenetre.blit(fon2.render("PAUSE, press 'p' to play",20,(250,210,200)) , [20,tey/2] )
     varm=float(vaisseau.armure)/float(vaisseau.armure_tot)
     pygame.draw.rect(fenetre,(30+int(varm*40),0,0+int(varm*250.)),(10,tey-20,int(varm*(tex-20.)),15),0)
     pygame.draw.rect(fenetre,(0,0,0),(10,tey-20,(tex-20),15),2)
@@ -187,7 +186,7 @@ def aff(fps,vaisseau,mis,meter,fn1y,fn2y,score,vens):
 
 ##############gestion du jeu##############
 
-def bbb(score,vaer,fn1y,fn2y,mis,vaisseau,meter,limm,vens,nben,taugen,daugen):
+def bbb(score,vaer,fn1y,fn2y,mis,vaisseau,meter,limm,vens,nben,taugen,daugen,pause):
     score+=vaisseau.acc
     for m in meter:
         if time.time()-m.dbg>=m.tbg:
@@ -263,16 +262,19 @@ def main_jeu():
     mis=[]
     vens=[]
     score=0
+    pause=False
     while encour:
         t1=time.time()
-        aff(fps,vaisseau,mis,meter,fn1y,fn2y,score,vens)
-        score,vaer,fn1y,fn2y,mis,vaisseau,meter,vens,nben,taugen,daugen=bbb(score,vaer,fn1y,fn2y,mis,vaisseau,meter,limm,vens,nben,taugen,daugen)
+        aff(fps,vaisseau,mis,meter,fn1y,fn2y,score,vens,pause)
+        score,vaer,fn1y,fn2y,mis,vaisseau,meter,vens,nben,taugen,daugen=bbb(score,vaer,fn1y,fn2y,mis,vaisseau,meter,limm,vens,nben,taugen,daugen,pause)
         verif_key(vaisseau,mis)
         for event in pygame.event.get():
             if event.type==QUIT: encour=False
             elif event.type==KEYDOWN:
                 if event.key==K_ESCAPE: encour=False
-                elif event.key==K_p: pause=not pause
+                elif event.key==K_p:
+                    pause=not pause
+                    time.sleep(0.5)
         t2=time.time()
         tt=float(t2)-float(t1)
         if tt!=0:
