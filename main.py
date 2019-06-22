@@ -216,7 +216,7 @@ class Bonus:
                 if vaisseau.ttir>0.01: vaisseau.ttir-=0.01
             elif self.effet==3:
                 vaisseau.energy+=200
-                if vaisseau.energy>vaisseau.enregy_tot: vaisseau.energy=vaisseau.energy_tot
+                if vaisseau.energy>vaisseau.energy_tot: vaisseau.energy=vaisseau.energy_tot
             elif self.effet==4:
                 vaisseau.armure+=50
                 if vaisseau.armure>vaisseau.armure_tot: vaisseau.armure=vaisseau.armure_tot
