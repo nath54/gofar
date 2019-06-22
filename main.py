@@ -499,7 +499,7 @@ def main_menu():
     bts=[None]
     fenetre.blit(imgfond1,[0,0])
     bts[0]=pygame.draw.rect(fenetre,(200,200,20),(200,400,200,100),0)
-    fenetre.blit(font.render("play",20,(250,0,0)),[])
+    fenetre.blit(font.render("play",20,(250,0,0)),[250,415])
     pygame.display.update()
     while encourme:
         for event in pygame.event.get():
@@ -523,5 +523,5 @@ def main_menu():
 
 
 
-main_jeu()
+main_menu()
 
