@@ -17,8 +17,10 @@ imgv=pygame.image.load("images/vaisseau.png")
 imgven1=pygame.image.load("images/ven1.png")
 imgb1=pygame.image.load("images/bonus1.png")
 imgb2=pygame.image.load("images/bonus2.png")
+imgb3=pygame.image.load("images/bonus3.png")
+imgb4=pygame.image.load("images/bonus4.png")
 
-bonuses=[["nb mis",1,imgb1],["speed mis",2,imgb2]]
+bonuses=[["nb mis",1,imgb1],["speed mis",2,imgb2],["energy+",3,imgb3],["armure+",4,imgb4]]
 
 ##############Astéroide##############
 
@@ -191,7 +193,7 @@ class Vsen1:
 
 class Bonus:
     def __init__(self,acc):
-        bn=bonuses[random.choice([0,1,1,1])]
+        bn=bonuses[random.choice([0,1,1,1,2,2,2,2,3,3,3,3])]
         self.nom=bn[0]
         self.effet=bn[1]
         self.tx=30
@@ -212,6 +214,12 @@ class Bonus:
                 if vaisseau.nbmis<5: vaisseau.nbmis+=1
             elif self.effet==2:
                 if vaisseau.ttir>0.01: vaisseau.ttir-=0.01
+            elif self.effet==3:
+                vaisseau.energy+=200
+                if vaisseau.energy>vaisseau.enregy_tot: vaisseau.energy=vaisseau.energy_tot
+            elif self.effet==4:
+                vaisseau.armure+=50
+                if vaisseau.armure>vaisseau.armure_tot: vaisseau.armure=vaisseau.armure_tot
             self.destroy=True
     
 ##############affichage##############
@@ -282,7 +290,7 @@ def bbb(score,vaer,fn1y,fn2y,mis,vaisseau,meter,limm,vens,nben,taugen,daugen,pau
         daugen=time.time()
         if nben<5: nben+=1
     #bonus
-    while len(bonus)<1: bonus.append( Bonus(vaisseau.acc) )
+    if time.time()-dbn>=tbn: bonus.append( Bonus(vaisseau.acc) )
     for b in bonus:
         if not b.destroy and b.py<tey:
             b.update(vaisseau)
