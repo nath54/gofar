@@ -130,7 +130,7 @@ class Vsen1:
         self.px=random.randint(self.tx,tex-self.tx)
         self.py=random.randint(-tey,0)
         self.img=pygame.transform.scale(imgven1,[self.tx,self.ty])
-        self.vit=1
+        self.vit=5
         self.acc=2
         self.dbg=time.time()
         self.tbg=0.01
@@ -154,7 +154,7 @@ class Vsen1:
             self.py+=self.acc
             if self.px<0: self.px=0
             if self.px>tex-self.tx: self.px=tex-self.tx
-            if random.randint(1,10)==1: self.tirer(mis)
+            if random.randint(1,50)==1: self.tirer(mis)
 
 
 ##############affichage##############
@@ -191,16 +191,16 @@ def bbb(score,vaer,fn1y,fn2y,mis,vaisseau,meter,limm,vens,nben,taugen,daugen,pau
     for m in meter:
         if time.time()-m.dbg>=m.tbg:
             m.py+=m.acc
-            if m.py >= tey: del(meter[meter.index(m)])
+            if m.py >= tey and m in meter: del(meter[meter.index(m)])
             if m.vt(vaisseau.rect):
                 vaisseau.armure-=1./float(m.tx+m.ty)*100
                 vaisseau.ddg=time.time()
-                del(meter[meter.index(m)])
+                if m in meter: del(meter[meter.index(m)])
             if m.destroy: #x,y,tx,ty,acc
                 if m.tx>=20 and m.ty>=20:
                     meter.append( Meteor(m.px-random.randint(0,m.tx),m.py+random.randint(-m.ty,m.ty),random.randint(int(m.tx/4),int(m.tx/1.5)),random.randint(int(m.ty/4),int(m.ty/1.5)),random.randint(1,m.acc+1)) )
                     meter.append( Meteor(m.px+random.randint(0,m.tx),m.py+random.randint(-m.ty,m.ty),random.randint(int(m.tx/4),int(m.tx/1.5)),random.randint(int(m.ty/4),int(m.ty/1.5)),random.randint(1,m.acc+1)) )
-                del(meter[meter.index(m)])
+                if m in meter: del(meter[meter.index(m)])
     while len(meter)<=limm:
         meter.append( Meteor(random.randint(0,tex),random.randint(-tey,0),random.randint(15,50),random.randint(15,40),random.randint(int(vaisseau.acc)-1,int(vaisseau.acc)+2)) )
     while len(vens)<nben:
