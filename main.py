@@ -893,7 +893,7 @@ def aff_menu(menu,j,vr):
          fenetre.blit( font.render("nombre maximal de regénération d'énergie : "+str(j.nbmaxregenenergy)            ,20,(250,250,250)) , [50,340] )
          fenetre.blit( font.render("nombre maximal de regénération d'armure : "+str(j.nbmaxregenarmure)             ,20,(250,250,250)) , [50,360] )
          fenetre.blit( font.render("niveau maximal fini : "+str(j.niveaumaxfini)                                    ,20,(250,250,250)) , [50,380] )
-         fenetre.blit( font.render("argent : "+str(j.argent)                                                        ,20,(250,250,250)) , [50,380] )
+         fenetre.blit( font.render("argent : "+str(j.argent)                                                        ,20,(250,250,250)) , [50,400] )
     elif menu==3: #vaisseaux
         bts[5]=pygame.draw.rect(fenetre,(150,100,0),(50,tey-50,150,30),0)
         fenetre.blit(font.render("précédent",20,(0,0,0)),[85,tey-45])
