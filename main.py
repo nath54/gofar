@@ -46,10 +46,26 @@ bosstps.append( [200,200,imgboss1,6,0,0.01,2,50,(250,200,0),5000,10,3,7,14,9] )
 bosstps.append( [200,200,imgboss1,7,0,0.01,1.5,50,(250,200,0),6000,12,4,7,14,9] )
 
 vaisseauxtps=[]
-vaisseauxtps.append( ["alpha-0" ,70   ,70  ,imgv ,3     ,100         ,1000        ,5               ,1            ,5                ,0.5                ,0.1                    ,5         ,0     ] )
-vaisseauxtps.append( ["alpha-1" ,70   ,70  ,imgv ,5     ,100         ,2000        ,10              ,1            ,7                ,0.5                ,0.05                   ,6         ,1     ] )
-vaisseauxtps.append( ["zeta-100",80   ,80  ,imgv ,7     ,500         ,5000        ,50              ,3            ,15               ,0.2                ,0.01                   ,9         ,100   ] )
-#                    0=nom      1=tx 2=ty 3=img 4=vies 5=armure_tot 6=energy_tot 7=missile degats 8=nb missiles 9=nb missiles max 10=vitesse missiles 11=vitesse missiles max 12=vitesse ,13=prix
+vaisseauxtps.append( ["alpha-0" ,70   ,70  ,imgv ,3     ,100         ,1000        ,5               ,1            ,5                ,0.5                ,0.1                    ,5         ,0            ,2      ,6     ,[(0,250,200)]] )
+vaisseauxtps.append( ["alpha-1" ,70   ,70  ,imgv ,5     ,100         ,2000        ,10              ,1            ,7                ,0.5                ,0.05                   ,6         ,1            ,2      ,6     ,[(0,200,150)]] )
+vaisseauxtps.append( ["beta-5"  ,100  ,100 ,imgv ,5     ,200         ,100000      ,10              ,1            ,1                ,0.                 ,0.                     ,7         ,1000000      ,20     ,20    ,[(250,0,0)]] )
+vaisseauxtps.append( ["zeta-100",80   ,80  ,imgv ,7     ,500         ,5000        ,50              ,3            ,15               ,0.2                ,0.01                   ,9         ,1000000000   ,2      ,6     ,[(250,0,0)]] )
+#                    0=nom      1=tx 2=ty 3=img 4=vies 5=armure_tot 6=energy_tot 7=missile degats 8=nb missiles 9=nb missiles max 10=vitesse missiles 11=vitesse missiles max 12=vitesse ,13=prix       ,14=mtx ,15=mty,16=couleurs
+
+cl=[250,0,0]
+for x in range(250*3):
+    if x/250<1:
+        cl[0]-=1
+        cl[1]+=1
+    elif x/250<2:
+        cl[1]-=1
+        cl[2]+=1
+    else:
+        cl[2]-=1
+        cl[0]+=1
+    vaisseauxtps[2][16].append(tuple(cl))
+    vaisseauxtps[3][16].append(tuple(cl))
+    
 
 from os.path import expanduser
 home = expanduser("~")
@@ -144,11 +160,12 @@ class Vaisso:
         self.ty=vtp[2]
         self.acc=1.0
         self.mdg=vtp[7]
-        self.mtx=3
-        self.mty=6
+        self.mtx=vtp[14]
+        self.mty=vtp[15]
         self.mvitx=0
         self.mvity=-20
-        self.mcl=(0,255,250)
+        self.mcls=vtp[16]
+        self.dcl=0
         self.mtps=7
         self.mce=5
         self.dtir=time.time()
@@ -195,13 +212,15 @@ class Vaisso:
                     self.px+=self.vit
         if aa=="Tir":
             if time.time()-self.dtir>=self.ttir and self.energy>self.mce:
+                self.dcl+=1
+                if self.dcl>=len(self.mcls): self.dcl=0
                 if time.time()-self.dtir>self.tpsmaxsanstirer: self.tpsmaxsanstirer=time.time()-self.dtir
                 self.dtir=time.time()
                 self.energy-=self.mce
                 mil=int(self.nbmis/2.)
                 divtx=self.nbmis+1
                 for x in range(self.nbmis):
-                    mis.append(Missil(  self.px+self.tx/divtx*(x+1) , self.py+self.ty/2  ,self.mtx,self.mty,x-mil,self.mvity,self.mdg,1,self.mtps,self.mcl))
+                    mis.append(Missil(  self.px+self.tx/divtx*(x+1) , self.py-self.mty  ,self.mtx,self.mty,x-mil,self.mvity,self.mdg,1,self.mtps,self.mcls[self.dcl]))
         return mis
 
 class Vsen:
@@ -333,6 +352,7 @@ def aff(fps,vaisseau,mis,meter,fn1y,fn2y,score,vens,pause,bonus,nv,nben):
                     pygame.draw.rect(fenetre,(250,0,0),(150,15,int(v.armure/v.armure_tot*(tex-250)),20),0)
                 elif v.tp==0:
                     pygame.draw.rect(fenetre,(250,0,0),(v.px,v.py-5,int(v.armure/v.armure_tot*v.tx),3),0)
+            #else: v.rect=pygame.Rect(v.px,v.py,v.tx,v.ty)
         vaisseau.rect=fenetre.blit( vaisseau.img , [vaisseau.px,vaisseau.py] )
         fenetre.blit(font.render("distance parcourue = "+str(int(vaisseau.distance_parcourue))+"m",20,(210,210,250)) , [5,10] )
         fenetre.blit(font.render("score = "+str(int(score)),20,(210,210,250)) , [5,30] )
@@ -505,10 +525,8 @@ def main_jeu(tpv):
         
         if vaisseau.vie<=0: encour=False
     vaisseau.niveaux_finis=nv-1
-    encour2=False
-    if vaisseau.vie<=0:
-        encour2=True
-        vaisseau.argent=10*vaisseau.ennemistues+50*vaisseau.bosstues+int(vaisseau.score/10000)
+    encour2=True
+    vaisseau.argent=10*vaisseau.ennemistues+50*vaisseau.bosstues+int(vaisseau.score/10000)
     fenetre.blit(font.render("VOUS ETES MORT",20,(210,100,250)) , [tex/3,tey/2] )
     fenetre.blit(font.render("score = "+str(int(score)),20,(100,210,250)) , [tex/3,tey/2+100] )
     fenetre.blit(font1.render("Vous avez gagné = "+str(int(vaisseau.argent))+"argent",20,(255,255,255)) , [tex/3,tey/2+200] )
@@ -723,14 +741,15 @@ def savej(joueur):
     f.write(txt)
     f.close()
 
-def alert(txt1,txt2):
+def alert(txt1,txt2,txt3):
+    taillex,tailley=400,350
     posx,posy=100,200
-    taillex,tailley=400,200
     pygame.draw.rect(fenetre,(25,25,25),(posx,posy,taillex,tailley),0)
     fenetre.blit(font.render(txt1,20,(255,255,255)),[posx+15,posy+20])
     fenetre.blit(font.render(txt2,20,(255,255,255)),[posx+10,posy+40])
+    fenetre.blit(font.render(txt3,20,(255,255,255)),[posx+10,posy+60])
     button=pygame.draw.rect(fenetre,(200,200,0),(posx+taillex/4,posy+tailley-50,taillex/2,40),0)
-    fenetre.blit(font.render("ok",20,(0,0,0)),[posx+taillex+3,posy+tailley-40])
+    fenetre.blit(font.render("ok",20,(0,0,0)),[posx+taillex/4+3,posy+tailley-40])
     pygame.display.update()
     encouralert=True
     while encouralert:
@@ -743,83 +762,83 @@ def alert(txt1,txt2):
                     encouralert=False
 
 def verif_missions(joueur,missions):
-    if joueur.distanceparcourue_tot>=missions[0][0]:
+    while joueur.distanceparcourue_tot>=missions[0][0]:
         missions[0][0]=int(missions[0][0]*1.5)
         joueur.argent+=missions[0][3]
         missions[0][3]=int(missions[0][3]*1.5)
         joueur.nbfaitmission1+=1
         missions[0][4]+=1
-        alert("Vous avez fini la mission : ",missions[0][1]+str(missions[0][0])+missions[0][2])
-    if joueur.ennemis_tues_tot>=missions[1][0]:
+        alert("Vous avez fini la mission : ",missions[0][1]+str(missions[0][0])+missions[0][2],"vous avez gagné "+str(int(missions[0][3]/1.5))+"argent")
+    while joueur.ennemis_tues_tot>=missions[1][0]:
         missions[1][0]=int(missions[1][0]*1.5)
         joueur.argent+=missions[1][3]
         missions[1][3]=int(missions[1][3]*1.5)
         joueur.nbfaitmission2+=1
         missions[1][4]+=1
-        alert("Vous avez fini la mission : ",missions[1][1]+str(missions[1][0])+missions[1][2])
-    if joueur.boss_tues_tot>=missions[2][0]:
+        alert("Vous avez fini la mission : ",missions[1][1]+str(missions[1][0])+missions[1][2],"vous avez gagné "+str(int(missions[1][3]/1.5))+"argent")
+    while joueur.boss_tues_tot>=missions[2][0]:
         missions[2][0]=int(missions[2][0]*1.5)
         joueur.argent+=missions[2][3]
         missions[2][3]=int(missions[2][3]*1.5)
         joueur.nbfaitmission3+=1
         missions[2][4]+=1
-        alert("Vous avez fini la mission : ",missions[2][1]+str(missions[2][0])+missions[2][2])
-    if joueur.score_tot>=missions[3][0]:
+        alert("Vous avez fini la mission : ",missions[2][1]+str(missions[2][0])+missions[2][2],"vous avez gagné "+str(int(missions[2][3]/1.5))+"argent")
+    while joueur.score_tot>=missions[3][0]:
         missions[3][0]=int(missions[3][0]*1.5)
         joueur.argent+=missions[3][3]
         missions[3][3]=int(missions[3][3]*1.5)
         joueur.nbfaitmission4+=1
         missions[3][4]+=1
-        alert("Vous avez fini la mission : ",missions[3][1]+str(missions[3][0])+missions[3][2])
-    if joueur.tpsmaxsanstirer>=missions[4][0]:
+        alert("Vous avez fini la mission : ",missions[3][1]+str(missions[3][0])+missions[3][2],"vous avez gagné "+str(int(missions[3][3]/1.5))+"argent")
+    while joueur.tpsmaxsanstirer>=missions[4][0]:
         missions[4][0]=int(missions[4][0]*1.5)
         joueur.argent+=missions[4][3]
         missions[4][3]=int(missions[4][3]*1.5)
         joueur.nbfaitmission5+=1
         missions[4][4]+=1
-        alert("Vous avez fini la mission : ",missions[4][1]+str(missions[4][0])+missions[4][2])
-    if joueur.tpsmaxsanssubirdg>=missions[5][0]:
+        alert("Vous avez fini la mission : ",missions[4][1]+str(missions[4][0])+missions[4][2],"vous avez gagné "+str(int(missions[4][3]/1.5))+"argent")
+    while joueur.tpsmaxsanssubirdg>=missions[5][0]:
         missions[5][0]=int(missions[5][0]*1.5)
         joueur.argent+=missions[5][3]
         missions[5][3]=int(missions[5][3]*1.5)
         joueur.nbfaitmission6+=1
         missions[5][4]+=1
-        alert("Vous avez fini la mission : ",missions[5][1]+str(missions[5][0])+missions[5][2])
-    if joueur.niveaufini>=missions[6][0]:
+        alert("Vous avez fini la mission : ",missions[5][1]+str(missions[5][0])+missions[5][2],"vous avez gagné "+str(int(missions[5][3]/1.5))+"argent")
+    while joueur.niveaufini>=missions[6][0]:
         missions[6][0]=int(missions[6][0]+1)
         joueur.argent+=missions[6][3]
         missions[6][3]=int(missions[6][3]*1.5)
         joueur.nbfaitmission7+=1
         missions[6][4]+=1
-        alert("Vous avez fini la mission : ",missions[6][1]+str(missions[6][0])+missions[6][2])
-    if joueur.nbmaxamnbmis>=missions[7][0]:
+        alert("Vous avez fini la mission : ",missions[6][1]+str(missions[6][0])+missions[6][2],"vous avez gagné "+str(int(missions[6][3]/1.5))+"argent")
+    while joueur.nbmaxamnbmis>=missions[7][0]:
         missions[7][0]=int(missions[7][0]+1)
         joueur.argent+=missions[7][3]
         missions[7][3]=int(missions[7][3]*1.5)
         joueur.nbfaitmission8+=1
         missions[7][4]+=1
-        alert("Vous avez fini la mission : ",missions[7][1]+str(missions[7][0])+missions[7][2])
-    if joueur.nbmaxvitmis>=missions[8][0]:
+        alert("Vous avez fini la mission : ",missions[7][1]+str(missions[7][0])+missions[7][2],"vous avez gagné "+str(int(missions[7][3]/1.5))+"argent")
+    while joueur.nbmaxvitmis>=missions[8][0]:
         missions[8][0]=int(missions[8][0]+1)
         joueur.argent+=missions[8][3]
         missions[8][3]=int(missions[8][3]*1.5)
         joueur.nbfaitmission9+=1
         missions[8][4]+=1
-        alert("Vous avez fini la mission : ",missions[8][1]+str(missions[8][0])+missions[8][2])
-    if joueur.nbmaxregenenergy>=missions[9][0]:
+        alert("Vous avez fini la mission : ",missions[8][1]+str(missions[8][0])+missions[8][2],"vous avez gagné "+str(int(missions[8][3]/1.5))+"argent")
+    while joueur.nbmaxregenenergy>=missions[9][0]:
         missions[9][0]=int(missions[9][0]+1)
         joueur.argent+=missions[9][3]
         missions[9][3]=int(missions[9][3]*1.5)
         joueur.nbfaitmission10+=1
         missions[9][4]+=1
-        alert("Vous avez fini la mission : ",missions[9][1]+str(missions[9][0])+missions[9][2])
-    if joueur.nbmaxregenarmure>=missions[10][0]:
+        alert("Vous avez fini la mission : ",missions[9][1]+str(missions[9][0])+missions[9][2],"vous avez gagné "+str(int(missions[9][3]/1.5))+"argent")
+    while joueur.nbmaxregenarmure>=missions[10][0]:
         missions[10][0]=int(missions[10][0]+1)
         joueur.argent+=missions[10][3]
         missions[10][3]=int(missions[10][3]*1.5)
         joueur.nbfaitmission11+=1
         missions[10][4]+=1
-        alert("Vous avez fini la mission : ",missions[10][1]+str(missions[10][0])+missions[10][2])
+        alert("Vous avez fini la mission : ",missions[10][1]+str(missions[10][0])+missions[10][2],"vous avez gagné "+str(int(missions[10][3]/1.5))+"argent")
     return joueur
 
 def act_j(joueur,vaisseau):
@@ -878,22 +897,22 @@ def aff_menu(menu,j,vr):
             yy+=30
     elif menu==2: #stats
          fenetre.blit( font1.render("Stats : ",20,(255,255,255)) , [250,50] )
-         fenetre.blit( font.render("distance parcourue totale : "+str(j.distanceparcourue_tot)+"m"                  ,20,(250,250,250)) , [50,100] )
-         fenetre.blit( font.render("distance parcoure maximale : "+str(j.distancemaxparcourue)+"m"                  ,20,(250,250,250)) , [50,120] )
-         fenetre.blit( font.render("score total : "+str(j.score_tot)                                                ,20,(250,250,250)) , [50,140] )
-         fenetre.blit( font.render("score maximal : "+str(j.scoremax)                                               ,20,(250,250,250)) , [50,160] )
-         fenetre.blit( font.render("ennemis tués maximaux : "+str(j.ennemis_tues_max)                               ,20,(250,250,250)) , [50,180] )
-         fenetre.blit( font.render("ennemis tués totaux : "+str(j.ennemis_tues_tot)                                 ,20,(250,250,250)) , [50,200] )
-         fenetre.blit( font.render("boss tués maximaux : "+str(j.boss_tues_max)                                     ,20,(250,250,250)) , [50,220] )
-         fenetre.blit( font.render("boss tués totaux : "+str(j.boss_tues_tot)                                       ,20,(250,250,250)) , [50,240] )
-         fenetre.blit( font.render("temps maximal sans tirer : "+str(j.tpsmaxsanstirer)[:5]+"sec"                   ,20,(250,250,250)) , [50,260] )
-         fenetre.blit( font.render("temps maximal sans subir de dégats : "+str(j.tpsmaxsanssubirdg)[:5]+"sec"       ,20,(250,250,250)) , [50,280] )
-         fenetre.blit( font.render("nombre maximal d'améliorations de la vitesse des missiles : "+str(j.nbmaxvitmis),20,(250,250,250)) , [50,300] )
-         fenetre.blit( font.render("nombre maximal d'améliorations sur le nombre de missiles : "+str(j.nbmaxamnbmis),20,(250,250,250)) , [50,320] )
-         fenetre.blit( font.render("nombre maximal de regénération d'énergie : "+str(j.nbmaxregenenergy)            ,20,(250,250,250)) , [50,340] )
-         fenetre.blit( font.render("nombre maximal de regénération d'armure : "+str(j.nbmaxregenarmure)             ,20,(250,250,250)) , [50,360] )
-         fenetre.blit( font.render("niveau maximal fini : "+str(j.niveaumaxfini)                                    ,20,(250,250,250)) , [50,380] )
-         fenetre.blit( font.render("argent : "+str(j.argent)                                                        ,20,(250,250,250)) , [50,400] )
+         fenetre.blit( font.render("distance parcourue totale : "+str(int(j.distanceparcourue_tot))+"m"                  ,20,(250,250,250)) , [50,100] )
+         fenetre.blit( font.render("distance parcoure maximale : "+str(int(j.distancemaxparcourue))+"m"                  ,20,(250,250,250)) , [50,120] )
+         fenetre.blit( font.render("score total : "+str(int(j.score_tot))                                                ,20,(250,250,250)) , [50,140] )
+         fenetre.blit( font.render("score maximal : "+str(int(j.scoremax))                                               ,20,(250,250,250)) , [50,160] )
+         fenetre.blit( font.render("ennemis tués maximaux : "+str(int(j.ennemis_tues_max))                               ,20,(250,250,250)) , [50,180] )
+         fenetre.blit( font.render("ennemis tués totaux : "+str(int(j.ennemis_tues_tot))                                 ,20,(250,250,250)) , [50,200] )
+         fenetre.blit( font.render("boss tués maximaux : "+str(int(j.boss_tues_max))                                     ,20,(250,250,250)) , [50,220] )
+         fenetre.blit( font.render("boss tués totaux : "+str(int(j.boss_tues_tot))                                       ,20,(250,250,250)) , [50,240] )
+         fenetre.blit( font.render("temps maximal sans tirer : "+str(j.tpsmaxsanstirer)[:5]+"sec"                        ,20,(250,250,250)) , [50,260] )
+         fenetre.blit( font.render("temps maximal sans subir de dégats : "+str(j.tpsmaxsanssubirdg)[:5]+"sec"            ,20,(250,250,250)) , [50,280] )
+         fenetre.blit( font.render("nombre maximal d'améliorations de la vitesse des missiles : "+str(int(j.nbmaxvitmis)),20,(250,250,250)) , [50,300] )
+         fenetre.blit( font.render("nombre maximal d'améliorations sur le nombre de missiles : "+str(int(j.nbmaxamnbmis)),20,(250,250,250)) , [50,320] )
+         fenetre.blit( font.render("nombre maximal de regénération d'énergie : "+str(int(j.nbmaxregenenergy))            ,20,(250,250,250)) , [50,340] )
+         fenetre.blit( font.render("nombre maximal de regénération d'armure : "+str(int(j.nbmaxregenarmure))             ,20,(250,250,250)) , [50,360] )
+         fenetre.blit( font.render("niveau maximal fini : "+str(int(j.niveaumaxfini))                                    ,20,(250,250,250)) , [50,380] )
+         fenetre.blit( font.render("argent : "+str(int(j.argent))                                                        ,20,(250,250,250)) , [50,400] )
     elif menu==3: #vaisseaux
         bts[5]=pygame.draw.rect(fenetre,(150,100,0),(50,tey-50,150,30),0)
         fenetre.blit(font.render("précédent",20,(0,0,0)),[85,tey-45])
@@ -924,7 +943,7 @@ def main_menu(missions):
     joueur=verif_missions(joueur,missions)
     encourme=True
     menu=0
-    vr=0
+    vr=joueur.vaisseauchoisi
     needtoaff=True
     while encourme:
         if needtoaff:
