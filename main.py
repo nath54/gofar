@@ -508,7 +508,7 @@ def main_jeu(tpv):
     encour2=False
     if vaisseau.vie<=0:
         encour2=True
-        vaisseau.argent=10*vaisseau.ennemistues+50*bosstues+int(score/10000)
+        vaisseau.argent=10*vaisseau.ennemistues+50*vaisseau.bosstues+int(vaisseau.score/10000)
     fenetre.blit(font.render("VOUS ETES MORT",20,(210,100,250)) , [tex/3,tey/2] )
     fenetre.blit(font.render("score = "+str(int(score)),20,(100,210,250)) , [tex/3,tey/2+100] )
     fenetre.blit(font1.render("Vous avez gagné = "+str(int(vaisseau.argent))+"argent",20,(255,255,255)) , [tex/3,tey/2+200] )
