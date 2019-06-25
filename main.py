@@ -15,6 +15,7 @@ imgfond2=pygame.transform.scale(pygame.image.load("images/fond.png"),[tex,tey])
 imgmeteor=pygame.image.load("images/meteor.png")
 imgv=pygame.image.load("images/vaisseau.png")
 imgv1=pygame.image.load("images/vaisseau1.png")
+imgv2=pygame.image.load("images/vaisseau2.png")
 imgven0=pygame.image.load("images/ven0.png")
 imgven1=pygame.image.load("images/ven1.png")
 imgven2=pygame.image.load("images/ven2.png")
@@ -59,14 +60,15 @@ bosstps.append( [200 ,200 ,imgboss2 ,7   ,0   ,0.01 ,0.4    ,10   ,(135, 12, 122
 #                tx  ,ty  ,image    ,vit ,acc  ,tbg ,ttir   ,dgts ,clmis            ,vie   ,vitmis ,nbmis ,txmis ,tymis  ,tpsmis
 
 vaisseauxtps=[]
-vaisseauxtps.append( ["alpha-0"         ,70   ,70  ,imgv ,3     ,100         ,1000        ,5               ,1            ,5                ,0.5                ,0.1                    ,5         ,0            ,2      ,6     ,-20      ,1      ,[(0,250,200)]] )
-vaisseauxtps.append( ["alpha-1"         ,70   ,70  ,imgv ,5     ,100         ,2000        ,10              ,1            ,7                ,0.5                ,0.05                   ,6         ,1000         ,2      ,6     ,-20      ,1      ,[(0,200,150)]] )
-vaisseauxtps.append( ["alpha-10"        ,70   ,70  ,imgv ,5     ,110         ,2500        ,15              ,2            ,10               ,0.7                ,0.01                   ,6         ,5000         ,2      ,7     ,-20      ,1      ,[(0,0,250)]] )
-vaisseauxtps.append( ["france-ship"     ,80   ,80  ,imgv1,5     ,150         ,5000        ,20              ,3            ,3                ,0.2                ,0.001                  ,10        ,200000       ,6      ,14    ,-15      ,1      ,[(255,0,0),(0,148,255),(255,255,255)]] )
-vaisseauxtps.append( ["beta-5"          ,100  ,100 ,imgv ,5     ,200         ,100000      ,10              ,1            ,1                ,0.                 ,0.                     ,7         ,1000000      ,40     ,40    ,-40      ,0.5    ,[(250,0,0)]] )
-vaisseauxtps.append( ["zeta-100"        ,80   ,80  ,imgv ,7     ,500         ,5000        ,50              ,3            ,15               ,0.2                ,0.01                   ,9         ,1000000000   ,2      ,6     ,-20      ,1      ,[(250,0,0)]] )
-vaisseauxtps.append( ["el destructor"   ,100  ,100 ,imgv ,10    ,1000        ,10000000    ,100             ,10           ,20               ,0.1                ,0.01                   ,12        ,1000000000000,5      ,5     ,-20      ,1      ,[(250,0,0)]] )
-#                    0=nom              1=tx 2=ty 3=img 4=vies 5=armure_tot 6=energy_tot 7=missile degats 8=nb missiles 9=nb missiles max 10=vitesse missiles 11=vitesse missiles max 12=vitesse ,13=prix       ,14=mtx ,15=mty,16=vitmis,17=mtps,18=couleurs
+vaisseauxtps.append( ["alpha-0"         ,70   ,70  ,imgv ,3     ,100         ,1000        ,5               ,1            ,5                ,0.5                ,0.1                    ,5         ,0            ,2      ,6     ,-20      ,1      ,1               ,0.01             ,[(0,250,200)]] )
+vaisseauxtps.append( ["alpha-1"         ,70   ,70  ,imgv ,5     ,100         ,2000        ,10              ,1            ,7                ,0.5                ,0.05                   ,6         ,1000         ,2      ,6     ,-20      ,1      ,1               ,0.01             ,[(0,200,150)]] )
+vaisseauxtps.append( ["alpha-10"        ,70   ,70  ,imgv ,5     ,110         ,2500        ,15              ,2            ,10               ,0.7                ,0.01                   ,6         ,5000         ,2      ,7     ,-20      ,1      ,1               ,0.01             ,[(0,0,250)]] )
+vaisseauxtps.append( ["france-ship"     ,80   ,80  ,imgv1,5     ,150         ,5000        ,20              ,3            ,3                ,0.2                ,0.001                  ,10        ,200000       ,6      ,14    ,-15      ,1      ,1               ,0.05             ,[(255,0,0),(0,148,255),(255,255,255)]] )
+vaisseauxtps.append( ["russian-ship"    ,80   ,80  ,imgv2,5     ,150         ,5000        ,35              ,1            ,1                ,0.7                ,0.1                    ,10        ,200000       ,100    ,20    ,-7       ,3      ,3               ,0.03             ,[(255,0,0),(255,255,255),(0,148,255)]] )
+vaisseauxtps.append( ["beta-5"          ,100  ,100 ,imgv ,5     ,200         ,100000      ,10              ,1            ,1                ,0.                 ,0.                     ,7         ,1000000      ,40     ,40    ,-40      ,0.5    ,1               ,0.01             ,[(250,0,0)]] )
+vaisseauxtps.append( ["zeta-100"        ,80   ,80  ,imgv ,7     ,500         ,5000        ,50              ,3            ,15               ,0.2                ,0.01                   ,9         ,1000000000   ,2      ,6     ,-20      ,1      ,1               ,0.01             ,[(250,0,0)]] )
+vaisseauxtps.append( ["el destructor"   ,100  ,100 ,imgv ,10    ,1000        ,10000000    ,100             ,10           ,20               ,0.1                ,0.01                   ,12        ,1000000000000,5      ,5     ,-20      ,1      ,1               ,0.01             ,[(250,0,0)]] )
+#                    0=nom              1=tx 2=ty 3=img 4=vies 5=armure_tot 6=energy_tot 7=missile degats 8=nb missiles 9=nb missiles max 10=vitesse missiles 11=vitesse missiles max 12=vitesse ,13=prix       ,14=mtx ,15=mty,16=vitmis,17=mtps,18=nb mis/valve ,19=tps/mis/valve ,20=couleurs
 
 cl=[250,0,0]
 for x in range(250*3):
@@ -79,10 +81,13 @@ for x in range(250*3):
     else:
         cl[2]-=1
         cl[0]+=1
-    vaisseauxtps[4][18].append(tuple(cl))
-    vaisseauxtps[5][18].append(tuple(cl))
-    vaisseauxtps[6][18].append(tuple(cl))
-    
+    vaisseauxtps[5][20].append(tuple(cl))
+    vaisseauxtps[6][20].append(tuple(cl))
+    vaisseauxtps[7][20].append(tuple(cl))
+
+
+musiques=["through_space.ogg"]
+dmus="musiques/"
 
 from os.path import expanduser
 home = expanduser("~")
@@ -182,10 +187,11 @@ class Vaisso:
         self.mty=vtp[15]
         self.mvitx=0
         self.mvity=vtp[16]
-        self.mcls=vtp[18]
+        self.mcls=vtp[20]
         self.dcl=0
         self.mtps=vtp[17]
         self.mce=5
+        self.nbmpv=vtp[18]
         self.dtir=time.time()
         self.ttir=vtp[10]
         self.maxttir=vtp[11]
@@ -215,6 +221,9 @@ class Vaisso:
         self.nbregenarmure=0
         self.argent=0
         self.image=pygame.transform.scale(vtp[3],[self.tx,self.ty])
+        self.dmv=time.time()
+        self.tpspmispvalve=vtp[19]
+        self.mpva=0
     def bouger(self,aa,mis):
         if time.time()-self.dbg>=self.tbg:
             self.dbg=time.time()
@@ -232,16 +241,20 @@ class Vaisso:
                     self.px+=self.vit
         if aa=="Tir":
             self.dapespace=time.time()
-            if time.time()-self.dtir>=self.ttir and self.energy>self.mce:
+            if time.time()-self.dtir>=self.ttir: self.mpva=0
+            if (time.time()-self.dtir>=self.ttir or self.mpva<self.nbmpv) and self.energy>self.mce:
                 if time.time()-self.dtir>self.tpsmaxsanstirer: self.tpsmaxsanstirer=time.time()-self.dtir
                 self.dtir=time.time()
-                self.energy-=self.mce
-                mil=int(self.nbmis/2.)
-                divtx=self.nbmis+1
-                for x in range(self.nbmis):
-                    self.dcl+=1
-                    if self.dcl>=len(self.mcls): self.dcl=0
-                    mis.append(Missil(  self.px+self.tx/divtx*(x+1) , self.py-self.mty  ,self.mtx,self.mty,x-mil,self.mvity,self.mdg,1,self.mtps,self.mcls[self.dcl]))
+                if self.mpva<self.nbmpv and time.time()-self.dmv>=self.tpspmispvalve:
+                    self.mpva+=1
+                    self.dmv=time.time()
+                    self.energy-=self.mce
+                    mil=int(self.nbmis/2.)
+                    divtx=self.nbmis+1
+                    for x in range(self.nbmis):
+                        self.dcl+=1
+                        if self.dcl>=len(self.mcls): self.dcl=0
+                        mis.append(Missil(  self.px+self.tx/divtx*(x+1)-self.mtx/2 , self.py-self.mty  ,self.mtx,self.mty,x-mil,self.mvity,self.mdg,1,self.mtps,self.mcls[self.dcl]))
         return mis
 
 class Vsen:
@@ -534,6 +547,8 @@ def main_jeu(tpv):
     fps=0
     pause=False
     encour=True
+    pygame.mixer.music.load(dmus+random.choice(musiques))
+    pygame.mixer.music.play(-1)
     while encour:
         t1=time.time()
         aff(fps,vaisseau,mis,meter,fn1y,fn2y,score,vens,pause,bonus,nv,nben)
