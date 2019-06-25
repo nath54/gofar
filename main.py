@@ -18,7 +18,11 @@ imgven0=pygame.image.load("images/ven0.png")
 imgven1=pygame.image.load("images/ven1.png")
 imgven2=pygame.image.load("images/ven2.png")
 imgven3=pygame.image.load("images/ven3.png")
+imgven4=pygame.image.load("images/ven4.png")
+imgven5=pygame.image.load("images/ven5.png")
+imgven6=pygame.image.load("images/ven6.png")
 imgboss1=pygame.image.load("images/boss1.png")
+imgboss2=pygame.image.load("images/boss2.png")
 imgb1=pygame.image.load("images/bonus1.png")
 imgb2=pygame.image.load("images/bonus2.png")
 imgb3=pygame.image.load("images/bonus3.png")
@@ -35,20 +39,23 @@ venstps.append( [50 ,50 ,imgven2 ,7  ,1.5  ,0.01 ,0.65 ,3    ,(250,0,100) ,50  ,
 venstps.append( [50 ,50 ,imgven2 ,8  ,1.65 ,0.01 ,0.50 ,5    ,(250,0,100) ,60  ,15    ,4    ,2    ,8    ,1] )
 venstps.append( [60 ,60 ,imgven3 ,9  ,1.75 ,0.01 ,0.50 ,4    ,(250,0,100) ,60  ,16    ,6    ,2    ,8    ,1] )
 venstps.append( [60 ,60 ,imgven3 ,10 ,1.95 ,0.01 ,0.50 ,6    ,(250,0,100) ,70  ,17    ,6    ,2    ,8    ,1] )
+venstps.append( [70 ,70 ,imgven4 ,11 ,2.05 ,0.50 ,0.60 ,10   ,(0,200,0)   ,80  ,22    ,2    ,1    ,6    ,0.5] )
+venstps.append( [70 ,70 ,imgven5 ,12 ,2.10 ,0.50 ,0.60 ,11   ,(0,235,0)   ,90  ,23    ,4    ,1    ,6    ,0.5] )
+venstps.append( [70 ,70 ,imgven6 ,10 ,2.00 ,0.50 ,0.60 ,16   ,(0,255,0)   ,100 ,20    ,2    ,5    ,8    ,0.5] )
 #                tx ,ty ,image   ,vit,acc  ,tbg  ,ttir ,dgts ,clmis       ,vie ,vitmis,nbmis,txmis,tymis,tpsmis
 
 bosstps=[]
-bosstps.append( [200 ,200 ,imgboss1 ,5   ,0   ,0.01 ,2      ,50   ,(250,200,0) ,1000  ,8      ,1     ,7     ,14     ,2] )
-bosstps.append( [200 ,200 ,imgboss1 ,6   ,0   ,0.01 ,2      ,50   ,(250,200,0) ,2000  ,10     ,2     ,7     ,14     ,2] )
-bosstps.append( [200 ,200 ,imgboss1 ,7   ,0   ,0.01 ,1.5    ,50   ,(250,200,0) ,3000  ,12     ,2     ,7     ,14     ,2] )
-bosstps.append( [200 ,200 ,imgboss1 ,5   ,0   ,0.01 ,2      ,50   ,(250,200,0) ,4000  ,8      ,3     ,7     ,14     ,2] )
-bosstps.append( [200 ,200 ,imgboss1 ,6   ,0   ,0.01 ,2      ,50   ,(250,200,0) ,5000  ,10     ,3     ,7     ,14     ,2] )
-bosstps.append( [200 ,200 ,imgboss1 ,7   ,0   ,0.01 ,1.5    ,50   ,(250,200,0) ,6000  ,12     ,4     ,7     ,14     ,2] )
-bosstps.append( [200 ,200 ,imgboss1 ,7   ,0   ,0.01 ,3      ,10   ,(0,200,0)   ,8000  ,5      ,1     ,10    ,35     ,2] )
-bosstps.append( [200 ,200 ,imgboss1 ,7   ,0   ,0.01 ,3      ,10   ,(0,200,0)   ,9000  ,5      ,1     ,10    ,35     ,2] )
-bosstps.append( [200 ,200 ,imgboss1 ,7   ,0   ,0.01 ,3      ,10   ,(0,200,0)   ,10000 ,5      ,1     ,10    ,35     ,2] )
+bosstps.append( [200 ,200 ,imgboss1 ,5   ,0   ,0.01 ,2      ,50   ,(250,200,0)      ,1000  ,8      ,1     ,7     ,14     ,2] )
+bosstps.append( [200 ,200 ,imgboss1 ,6   ,0   ,0.01 ,2      ,50   ,(250,200,0)      ,2000  ,10     ,2     ,7     ,14     ,2] )
+bosstps.append( [200 ,200 ,imgboss1 ,7   ,0   ,0.01 ,1.5    ,50   ,(250,200,0)      ,3000  ,12     ,2     ,7     ,14     ,2] )
+bosstps.append( [200 ,200 ,imgboss1 ,5   ,0   ,0.01 ,2      ,50   ,(250,200,0)      ,4000  ,8      ,3     ,7     ,14     ,2] )
+bosstps.append( [200 ,200 ,imgboss1 ,6   ,0   ,0.01 ,2      ,50   ,(250,200,0)      ,5000  ,10     ,3     ,7     ,14     ,2] )
+bosstps.append( [200 ,200 ,imgboss1 ,7   ,0   ,0.01 ,1.5    ,50   ,(250,200,0)      ,6000  ,12     ,4     ,7     ,14     ,2] )
+bosstps.append( [200 ,200 ,imgboss2 ,7   ,0   ,0.01 ,3      ,10   ,(135, 12, 122)   ,8000  ,5      ,1     ,10    ,35     ,2] )
+bosstps.append( [200 ,200 ,imgboss2 ,7   ,0   ,0.01 ,3      ,10   ,(135, 12, 122)   ,9000  ,5      ,1     ,10    ,35     ,2] )
+bosstps.append( [200 ,200 ,imgboss2 ,7   ,0   ,0.01 ,3      ,10   ,(135, 12, 122)   ,10000 ,5      ,1     ,10    ,35     ,2] )
 
-#                tx  ,ty  ,image    ,vit ,acc  ,tbg ,ttir   ,dgts ,clmis       ,vie   ,vitmis ,nbmis ,txmis ,tymis  ,tpsmis
+#                tx  ,ty  ,image    ,vit ,acc  ,tbg ,ttir   ,dgts ,clmis            ,vie   ,vitmis ,nbmis ,txmis ,tymis  ,tpsmis
 
 vaisseauxtps=[]
 vaisseauxtps.append( ["alpha-0"         ,70   ,70  ,imgv ,3     ,100         ,1000        ,5               ,1            ,5                ,0.5                ,0.1                    ,5         ,0            ,2      ,6     ,-20      ,1      ,[(0,250,200)]] )
@@ -158,7 +165,8 @@ class Vaisso:
     def __init__(self,tp):
         vtp=vaisseauxtps[tp]
         self.tp=1
-        self.vie=vtp[4]
+        self.vie_tot=vtp[4]
+        self.vie=self.vie_tot
         self.armure_tot=vtp[5]
         self.armure=self.armure_tot
         self.vit=vtp[12]
@@ -192,7 +200,7 @@ class Vaisso:
         self.trarm=10
         self.energy_tot=vtp[6]
         self.energy=self.energy_tot
-        self.tremp=2
+        self.tremp=self.ttir
         self.ennemistues=0
         self.bosstues=0
         self.score=0
@@ -443,10 +451,11 @@ def bbb(score,vaer,fn1y,fn2y,mis,vaisseau,meter,limm,vens,nben,taugen,daugen,pau
             if nv<len(bosstps):
                 vens.append( Boss(bosstps[nv]) )
             else:
-                bb=bosstps[len(bosstps)-1]
-                bb.vie+=(len(bosstps)-1-nv)*2000
+                bb=Boss( bosstps[len(bosstps)-1] )
+                bb.armure+=(len(bosstps)-1-nv)*2000
+                bb.armure_tot+=(len(bosstps)-1-nv)*2000
                 bb.nbmis+=(len(bosstps)-1-nv)
-                vens.append( Boss(bb) ) 
+                vens.append( bb ) 
             nv+=1
             nben=0
     #bonus
@@ -505,7 +514,7 @@ def main_jeu(tpv):
     meter=[]
     #ven
     nben=1
-    taugen=35
+    taugen=30
     daugen=time.time()
     nv=0
     vens=[]
