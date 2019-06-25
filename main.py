@@ -27,30 +27,37 @@ imgb4=pygame.image.load("images/bonus4.png")
 bonuses=[["nb mis",1,imgb1],["speed mis",2,imgb2],["energy+",3,imgb3],["armure+",4,imgb4]]
 
 venstps=[]
-venstps.append( [30 ,30 ,imgven0 ,3  ,1    ,0.01 ,0.75 ,1    ,(250,0,100) ,25  ,10    ,1    ,2    ,8    ,5] )
-venstps.append( [30 ,30 ,imgven0 ,4  ,1.25 ,0.01 ,0.70 ,3    ,(250,0,100) ,35  ,11    ,1    ,2    ,8    ,5] )
-venstps.append( [40 ,40 ,imgven1 ,5  ,1.35 ,0.01 ,0.70 ,2    ,(250,0,100) ,35  ,12    ,2    ,2    ,8    ,5] )
-venstps.append( [40 ,40 ,imgven1 ,6  ,1.40 ,0.01 ,0.65 ,4    ,(250,0,100) ,50  ,13    ,2    ,2    ,8    ,5] )
-venstps.append( [50 ,50 ,imgven2 ,7  ,1.5  ,0.01 ,0.65 ,3    ,(250,0,100) ,50  ,14    ,4    ,2    ,8    ,5] )
-venstps.append( [50 ,50 ,imgven2 ,8  ,1.65 ,0.01 ,0.50 ,5    ,(250,0,100) ,60  ,15    ,4    ,2    ,8    ,5] )
-venstps.append( [60 ,60 ,imgven3 ,9  ,1.75 ,0.01 ,0.50 ,4    ,(250,0,100) ,60  ,16    ,6    ,2    ,8    ,5] )
-venstps.append( [60 ,60 ,imgven3 ,10 ,1.95 ,0.01 ,0.50 ,6    ,(250,0,100) ,70  ,17    ,6    ,2    ,8    ,5] )
+venstps.append( [30 ,30 ,imgven0 ,3  ,1    ,0.01 ,0.75 ,1    ,(250,0,100) ,25  ,10    ,1    ,2    ,8    ,1] )
+venstps.append( [30 ,30 ,imgven0 ,4  ,1.25 ,0.01 ,0.70 ,3    ,(250,0,100) ,35  ,11    ,1    ,2    ,8    ,1] )
+venstps.append( [40 ,40 ,imgven1 ,5  ,1.35 ,0.01 ,0.70 ,2    ,(250,0,100) ,35  ,12    ,2    ,2    ,8    ,1] )
+venstps.append( [40 ,40 ,imgven1 ,6  ,1.40 ,0.01 ,0.65 ,4    ,(250,0,100) ,50  ,13    ,2    ,2    ,8    ,1] )
+venstps.append( [50 ,50 ,imgven2 ,7  ,1.5  ,0.01 ,0.65 ,3    ,(250,0,100) ,50  ,14    ,4    ,2    ,8    ,1] )
+venstps.append( [50 ,50 ,imgven2 ,8  ,1.65 ,0.01 ,0.50 ,5    ,(250,0,100) ,60  ,15    ,4    ,2    ,8    ,1] )
+venstps.append( [60 ,60 ,imgven3 ,9  ,1.75 ,0.01 ,0.50 ,4    ,(250,0,100) ,60  ,16    ,6    ,2    ,8    ,1] )
+venstps.append( [60 ,60 ,imgven3 ,10 ,1.95 ,0.01 ,0.50 ,6    ,(250,0,100) ,70  ,17    ,6    ,2    ,8    ,1] )
 #                tx ,ty ,image   ,vit,acc  ,tbg  ,ttir ,dgts ,clmis       ,vie ,vitmis,nbmis,txmis,tymis,tpsmis
 
 bosstps=[]
-bosstps.append( [200,200,imgboss1,5,0,0.01,2,50,(250,200,0),1000,8,1,7,14,9] )
-bosstps.append( [200,200,imgboss1,6,0,0.01,2,50,(250,200,0),2000,10,2,7,14,9] )
-bosstps.append( [200,200,imgboss1,7,0,0.01,1.5,50,(250,200,0),3000,12,2,7,14,9] )
-bosstps.append( [200,200,imgboss1,5,0,0.01,2,50,(250,200,0),4000,8,3,7,14,9] )
-bosstps.append( [200,200,imgboss1,6,0,0.01,2,50,(250,200,0),5000,10,3,7,14,9] )
-bosstps.append( [200,200,imgboss1,7,0,0.01,1.5,50,(250,200,0),6000,12,4,7,14,9] )
+bosstps.append( [200 ,200 ,imgboss1 ,5   ,0   ,0.01 ,2      ,50   ,(250,200,0) ,1000  ,8      ,1     ,7     ,14     ,2] )
+bosstps.append( [200 ,200 ,imgboss1 ,6   ,0   ,0.01 ,2      ,50   ,(250,200,0) ,2000  ,10     ,2     ,7     ,14     ,2] )
+bosstps.append( [200 ,200 ,imgboss1 ,7   ,0   ,0.01 ,1.5    ,50   ,(250,200,0) ,3000  ,12     ,2     ,7     ,14     ,2] )
+bosstps.append( [200 ,200 ,imgboss1 ,5   ,0   ,0.01 ,2      ,50   ,(250,200,0) ,4000  ,8      ,3     ,7     ,14     ,2] )
+bosstps.append( [200 ,200 ,imgboss1 ,6   ,0   ,0.01 ,2      ,50   ,(250,200,0) ,5000  ,10     ,3     ,7     ,14     ,2] )
+bosstps.append( [200 ,200 ,imgboss1 ,7   ,0   ,0.01 ,1.5    ,50   ,(250,200,0) ,6000  ,12     ,4     ,7     ,14     ,2] )
+bosstps.append( [200 ,200 ,imgboss1 ,7   ,0   ,0.01 ,3      ,10   ,(0,200,0)   ,8000  ,5      ,1     ,10    ,35     ,2] )
+bosstps.append( [200 ,200 ,imgboss1 ,7   ,0   ,0.01 ,3      ,10   ,(0,200,0)   ,9000  ,5      ,1     ,10    ,35     ,2] )
+bosstps.append( [200 ,200 ,imgboss1 ,7   ,0   ,0.01 ,3      ,10   ,(0,200,0)   ,10000 ,5      ,1     ,10    ,35     ,2] )
+
+#                tx  ,ty  ,image    ,vit ,acc  ,tbg ,ttir   ,dgts ,clmis       ,vie   ,vitmis ,nbmis ,txmis ,tymis  ,tpsmis
 
 vaisseauxtps=[]
-vaisseauxtps.append( ["alpha-0" ,70   ,70  ,imgv ,3     ,100         ,1000        ,5               ,1            ,5                ,0.5                ,0.1                    ,5         ,0            ,2      ,6     ,[(0,250,200)]] )
-vaisseauxtps.append( ["alpha-1" ,70   ,70  ,imgv ,5     ,100         ,2000        ,10              ,1            ,7                ,0.5                ,0.05                   ,6         ,1            ,2      ,6     ,[(0,200,150)]] )
-vaisseauxtps.append( ["beta-5"  ,100  ,100 ,imgv ,5     ,200         ,100000      ,10              ,1            ,1                ,0.                 ,0.                     ,7         ,1000000      ,20     ,20    ,[(250,0,0)]] )
-vaisseauxtps.append( ["zeta-100",80   ,80  ,imgv ,7     ,500         ,5000        ,50              ,3            ,15               ,0.2                ,0.01                   ,9         ,1000000000   ,2      ,6     ,[(250,0,0)]] )
-#                    0=nom      1=tx 2=ty 3=img 4=vies 5=armure_tot 6=energy_tot 7=missile degats 8=nb missiles 9=nb missiles max 10=vitesse missiles 11=vitesse missiles max 12=vitesse ,13=prix       ,14=mtx ,15=mty,16=couleurs
+vaisseauxtps.append( ["alpha-0"         ,70   ,70  ,imgv ,3     ,100         ,1000        ,5               ,1            ,5                ,0.5                ,0.1                    ,5         ,0            ,2      ,6     ,-20      ,1      ,[(0,250,200)]] )
+vaisseauxtps.append( ["alpha-1"         ,70   ,70  ,imgv ,5     ,100         ,2000        ,10              ,1            ,7                ,0.5                ,0.05                   ,6         ,1000         ,2      ,6     ,-20      ,1      ,[(0,200,150)]] )
+vaisseauxtps.append( ["alpha-10"        ,70   ,70  ,imgv ,5     ,110         ,2500        ,15              ,2            ,10               ,0.7                ,0.01                   ,6         ,5000         ,2      ,7     ,-20      ,1      ,[(0,0,250)]] )
+vaisseauxtps.append( ["beta-5"          ,100  ,100 ,imgv ,5     ,200         ,100000      ,10              ,1            ,1                ,0.                 ,0.                     ,7         ,1000000      ,40     ,40    ,-40      ,0.5    ,[(250,0,0)]] )
+vaisseauxtps.append( ["zeta-100"        ,80   ,80  ,imgv ,7     ,500         ,5000        ,50              ,3            ,15               ,0.2                ,0.01                   ,9         ,1000000000   ,2      ,6     ,-20      ,1      ,[(250,0,0)]] )
+vaisseauxtps.append( ["el destructor"   ,100  ,100 ,imgv ,10    ,1000        ,10000000    ,100             ,10           ,20               ,0.1                ,0.01                   ,12        ,1000000000000,5      ,5     ,-20      ,1      ,[(250,0,0)]] )
+#                    0=nom              1=tx 2=ty 3=img 4=vies 5=armure_tot 6=energy_tot 7=missile degats 8=nb missiles 9=nb missiles max 10=vitesse missiles 11=vitesse missiles max 12=vitesse ,13=prix       ,14=mtx ,15=mty,16=vitmis,17=mtps,18=couleurs
 
 cl=[250,0,0]
 for x in range(250*3):
@@ -63,8 +70,9 @@ for x in range(250*3):
     else:
         cl[2]-=1
         cl[0]+=1
-    vaisseauxtps[2][16].append(tuple(cl))
-    vaisseauxtps[3][16].append(tuple(cl))
+    vaisseauxtps[3][18].append(tuple(cl))
+    vaisseauxtps[4][18].append(tuple(cl))
+    vaisseauxtps[5][18].append(tuple(cl))
     
 
 from os.path import expanduser
@@ -163,16 +171,16 @@ class Vaisso:
         self.mtx=vtp[14]
         self.mty=vtp[15]
         self.mvitx=0
-        self.mvity=-20
-        self.mcls=vtp[16]
+        self.mvity=vtp[16]
+        self.mcls=vtp[18]
         self.dcl=0
-        self.mtps=7
+        self.mtps=vtp[17]
         self.mce=5
         self.dtir=time.time()
         self.ttir=vtp[10]
         self.maxttir=vtp[11]
         self.amttir=0
-        self.amttirmax=self.maxttir-self.ttir/0.01
+        self.amttirmax=int((self.ttir-self.maxttir)/0.01)
         self.nbmis=vtp[8]
         self.maxnbmis=vtp[9]
         self.amdg=0
@@ -320,9 +328,12 @@ class Bonus:
                     vaisseau.amdg+=1
                     vaisseau.mdg+=1
             elif self.effet==2:
-                if vaisseau.ttir>0.01:
+                if vaisseau.ttir>vaisseau.maxttir:
                     vaisseau.ttir-=0.01
-                vaisseau.amttir+=1
+                    vaisseau.amttir+=1
+                else:
+                    vaisseau.amdg+=1
+                    vaisseau.mdg+=1
             elif self.effet==3:
                 vaisseau.energy+=200
                 if vaisseau.energy>vaisseau.energy_tot: vaisseau.energy=vaisseau.energy_tot
@@ -349,9 +360,9 @@ def aff(fps,vaisseau,mis,meter,fn1y,fn2y,score,vens,pause,bonus,nv,nben):
             if v.px>=0-v.tx and v.px <= tex+v.tx and v.py>=0-v.ty and v.py <= tey+v.ty:
                 v.rect=fenetre.blit( v.img, [v.px,v.py] )
                 if v.tp==2:
-                    pygame.draw.rect(fenetre,(250,0,0),(150,15,int(v.armure/v.armure_tot*(tex-250)),20),0)
+                    if v.armure>0: pygame.draw.rect(fenetre,(250,0,0),(150,15,int(v.armure/v.armure_tot*(tex-250)),20),0)
                 elif v.tp==0:
-                    pygame.draw.rect(fenetre,(250,0,0),(v.px,v.py-5,int(v.armure/v.armure_tot*v.tx),3),0)
+                    if v.armure>0: pygame.draw.rect(fenetre,(250,0,0),(v.px,v.py-5,int(v.armure/v.armure_tot*v.tx),3),0)
             #else: v.rect=pygame.Rect(v.px,v.py,v.tx,v.ty)
         vaisseau.rect=fenetre.blit( vaisseau.img , [vaisseau.px,vaisseau.py] )
         fenetre.blit(font.render("distance parcourue = "+str(int(vaisseau.distance_parcourue))+"m",20,(210,210,250)) , [5,10] )
@@ -366,13 +377,16 @@ def aff(fps,vaisseau,mis,meter,fn1y,fn2y,score,vens,pause,bonus,nv,nben):
         fenetre.blit(font.render("niveau = "+str(int(nv)),20,(210,210,250)) , [5,180] )
     else:
         fenetre.blit(fon2.render("PAUSE, appuyez 'p' pour jouer",20,(250,210,200)) , [20,tey/2] )
-    varm=float(vaisseau.armure)/float(vaisseau.armure_tot)
+    
     vener=float(vaisseau.energy)/float(vaisseau.energy_tot)
     ety=tey-50
-    pygame.draw.rect(fenetre,(0,255,250),(tex-25,10+ety-int(vener*ety),20,int(vener*ety)),0)
-    pygame.draw.rect(fenetre,(0,55,50),(tex-25,10,20,tey-50),2)
-    pygame.draw.rect(fenetre,(30+int(varm*40),0,0+int(varm*250.)),(10,tey-20,int(varm*(tex-20.)),15),0)
-    pygame.draw.rect(fenetre,(0,0,0),(10,tey-20,(tex-20),15),2)
+    pygame.draw.rect(fenetre,(0,255,250),(tex-25,10+ety-int(vener*ety),10,int(vener*ety)),0)
+    pygame.draw.rect(fenetre,(0,55,50),(tex-25,10,10,tey-50),2)
+    if vaisseau.armure>0: 
+        varm=float(vaisseau.armure)/float(vaisseau.armure_tot)
+        vvie=float(vaisseau.vie)/float(vaisseau.vie_tot)
+        pygame.draw.rect(fenetre,(30+int(vvie*40),0,0+int(vvie*250.)),(10,tey-20,int(varm*(tex-20.)),15),0)
+        pygame.draw.rect(fenetre,(0,0,0),(10,tey-20,(tex-20),15),2)
     pygame.display.update()
     pygame.display.flip()
 
@@ -742,12 +756,12 @@ def savej(joueur):
     f.close()
 
 def alert(txt1,txt2,txt3):
-    taillex,tailley=400,350
-    posx,posy=100,200
+    taillex,tailley=550,350
+    posx,posy=50,200
     pygame.draw.rect(fenetre,(25,25,25),(posx,posy,taillex,tailley),0)
     fenetre.blit(font.render(txt1,20,(255,255,255)),[posx+15,posy+20])
-    fenetre.blit(font.render(txt2,20,(255,255,255)),[posx+10,posy+40])
-    fenetre.blit(font.render(txt3,20,(255,255,255)),[posx+10,posy+60])
+    fenetre.blit(font.render(txt2,20,(255,255,255)),[posx+10,posy+60])
+    fenetre.blit(font.render(txt3,20,(255,255,255)),[posx+10,posy+100])
     button=pygame.draw.rect(fenetre,(200,200,0),(posx+taillex/4,posy+tailley-50,taillex/2,40),0)
     fenetre.blit(font.render("ok",20,(0,0,0)),[posx+taillex/4+3,posy+tailley-40])
     pygame.display.update()
@@ -768,77 +782,77 @@ def verif_missions(joueur,missions):
         missions[0][3]=int(missions[0][3]*1.5)
         joueur.nbfaitmission1+=1
         missions[0][4]+=1
-        alert("Vous avez fini la mission : ",missions[0][1]+str(missions[0][0])+missions[0][2],"vous avez gagné "+str(int(missions[0][3]/1.5))+"argent")
+        alert("Vous avez fini la mission : ",missions[0][1]+str(missions[0][0])+missions[0][2],"vous avez gagné "+str(int(missions[0][3]/1.5))+" argent")
     while joueur.ennemis_tues_tot>=missions[1][0]:
         missions[1][0]=int(missions[1][0]*1.5)
         joueur.argent+=missions[1][3]
         missions[1][3]=int(missions[1][3]*1.5)
         joueur.nbfaitmission2+=1
         missions[1][4]+=1
-        alert("Vous avez fini la mission : ",missions[1][1]+str(missions[1][0])+missions[1][2],"vous avez gagné "+str(int(missions[1][3]/1.5))+"argent")
+        alert("Vous avez fini la mission : ",missions[1][1]+str(missions[1][0])+missions[1][2],"vous avez gagné "+str(int(missions[1][3]/1.5))+" argent")
     while joueur.boss_tues_tot>=missions[2][0]:
         missions[2][0]=int(missions[2][0]*1.5)
         joueur.argent+=missions[2][3]
         missions[2][3]=int(missions[2][3]*1.5)
         joueur.nbfaitmission3+=1
         missions[2][4]+=1
-        alert("Vous avez fini la mission : ",missions[2][1]+str(missions[2][0])+missions[2][2],"vous avez gagné "+str(int(missions[2][3]/1.5))+"argent")
+        alert("Vous avez fini la mission : ",missions[2][1]+str(missions[2][0])+missions[2][2],"vous avez gagné "+str(int(missions[2][3]/1.5))+" argent")
     while joueur.score_tot>=missions[3][0]:
         missions[3][0]=int(missions[3][0]*1.5)
         joueur.argent+=missions[3][3]
         missions[3][3]=int(missions[3][3]*1.5)
         joueur.nbfaitmission4+=1
         missions[3][4]+=1
-        alert("Vous avez fini la mission : ",missions[3][1]+str(missions[3][0])+missions[3][2],"vous avez gagné "+str(int(missions[3][3]/1.5))+"argent")
+        alert("Vous avez fini la mission : ",missions[3][1]+str(missions[3][0])+missions[3][2],"vous avez gagné "+str(int(missions[3][3]/1.5))+" argent")
     while joueur.tpsmaxsanstirer>=missions[4][0]:
         missions[4][0]=int(missions[4][0]*1.5)
         joueur.argent+=missions[4][3]
         missions[4][3]=int(missions[4][3]*1.5)
         joueur.nbfaitmission5+=1
         missions[4][4]+=1
-        alert("Vous avez fini la mission : ",missions[4][1]+str(missions[4][0])+missions[4][2],"vous avez gagné "+str(int(missions[4][3]/1.5))+"argent")
+        alert("Vous avez fini la mission : ",missions[4][1]+str(missions[4][0])+missions[4][2],"vous avez gagné "+str(int(missions[4][3]/1.5))+" argent")
     while joueur.tpsmaxsanssubirdg>=missions[5][0]:
         missions[5][0]=int(missions[5][0]*1.5)
         joueur.argent+=missions[5][3]
         missions[5][3]=int(missions[5][3]*1.5)
         joueur.nbfaitmission6+=1
         missions[5][4]+=1
-        alert("Vous avez fini la mission : ",missions[5][1]+str(missions[5][0])+missions[5][2],"vous avez gagné "+str(int(missions[5][3]/1.5))+"argent")
+        alert("Vous avez fini la mission : ",missions[5][1]+str(missions[5][0])+missions[5][2],"vous avez gagné "+str(int(missions[5][3]/1.5))+" argent")
     while joueur.niveaufini>=missions[6][0]:
         missions[6][0]=int(missions[6][0]+1)
         joueur.argent+=missions[6][3]
         missions[6][3]=int(missions[6][3]*1.5)
         joueur.nbfaitmission7+=1
         missions[6][4]+=1
-        alert("Vous avez fini la mission : ",missions[6][1]+str(missions[6][0])+missions[6][2],"vous avez gagné "+str(int(missions[6][3]/1.5))+"argent")
+        alert("Vous avez fini la mission : ",missions[6][1]+str(missions[6][0])+missions[6][2],"vous avez gagné "+str(int(missions[6][3]/1.5))+" argent")
     while joueur.nbmaxamnbmis>=missions[7][0]:
         missions[7][0]=int(missions[7][0]+1)
         joueur.argent+=missions[7][3]
         missions[7][3]=int(missions[7][3]*1.5)
         joueur.nbfaitmission8+=1
         missions[7][4]+=1
-        alert("Vous avez fini la mission : ",missions[7][1]+str(missions[7][0])+missions[7][2],"vous avez gagné "+str(int(missions[7][3]/1.5))+"argent")
+        alert("Vous avez fini la mission : ",missions[7][1]+str(missions[7][0])+missions[7][2],"vous avez gagné "+str(int(missions[7][3]/1.5))+" argent")
     while joueur.nbmaxvitmis>=missions[8][0]:
         missions[8][0]=int(missions[8][0]+1)
         joueur.argent+=missions[8][3]
         missions[8][3]=int(missions[8][3]*1.5)
         joueur.nbfaitmission9+=1
         missions[8][4]+=1
-        alert("Vous avez fini la mission : ",missions[8][1]+str(missions[8][0])+missions[8][2],"vous avez gagné "+str(int(missions[8][3]/1.5))+"argent")
+        alert("Vous avez fini la mission : ",missions[8][1]+str(missions[8][0])+missions[8][2],"vous avez gagné "+str(int(missions[8][3]/1.5))+" argent")
     while joueur.nbmaxregenenergy>=missions[9][0]:
         missions[9][0]=int(missions[9][0]+1)
         joueur.argent+=missions[9][3]
         missions[9][3]=int(missions[9][3]*1.5)
         joueur.nbfaitmission10+=1
         missions[9][4]+=1
-        alert("Vous avez fini la mission : ",missions[9][1]+str(missions[9][0])+missions[9][2],"vous avez gagné "+str(int(missions[9][3]/1.5))+"argent")
+        alert("Vous avez fini la mission : ",missions[9][1]+str(missions[9][0])+missions[9][2],"vous avez gagné "+str(int(missions[9][3]/1.5))+" argent")
     while joueur.nbmaxregenarmure>=missions[10][0]:
         missions[10][0]=int(missions[10][0]+1)
         joueur.argent+=missions[10][3]
         missions[10][3]=int(missions[10][3]*1.5)
         joueur.nbfaitmission11+=1
         missions[10][4]+=1
-        alert("Vous avez fini la mission : ",missions[10][1]+str(missions[10][0])+missions[10][2],"vous avez gagné "+str(int(missions[10][3]/1.5))+"argent")
+        alert("Vous avez fini la mission : ",missions[10][1]+str(missions[10][0])+missions[10][2],"vous avez gagné "+str(int(missions[10][3]/1.5))+" argent")
     return joueur
 
 def act_j(joueur,vaisseau):
@@ -941,6 +955,7 @@ def aff_menu(menu,j,vr):
 def main_menu(missions):
     joueur,missions=loadj(missions)
     joueur=verif_missions(joueur,missions)
+    savej(joueur)
     encourme=True
     menu=0
     vr=joueur.vaisseauchoisi
