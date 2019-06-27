@@ -13,9 +13,6 @@ fon2=pygame.font.SysFont("Sans",50)
 imgfond1=pygame.transform.scale(pygame.image.load("images/fond.png"),[tex,tey])
 imgfond2=pygame.transform.scale(pygame.image.load("images/fond.png"),[tex,tey])
 imgmeteor=pygame.image.load("images/meteor.png")
-imgv=pygame.image.load("images/vaisseau.png")
-imgv1=pygame.image.load("images/vaisseau1.png")
-imgv2=pygame.image.load("images/vaisseau2.png")
 imgven0=pygame.image.load("images/ven0.png")
 imgven1=pygame.image.load("images/ven1.png")
 imgven2=pygame.image.load("images/ven2.png")
@@ -29,6 +26,13 @@ imgb1=pygame.image.load("images/bonus1.png")
 imgb2=pygame.image.load("images/bonus2.png")
 imgb3=pygame.image.load("images/bonus3.png")
 imgb4=pygame.image.load("images/bonus4.png")
+
+
+musiques=["through_space.ogg","ObservingTheStar.ogg","OutThere.ogg","space.mp3","Industria.mp3","Fly_1.mp3","Fly.mp3","Industria_1.mp3"]
+musiques_menu=["menu_sci-fi.ogg","menu_sci-fi1.ogg"]
+dmus="musiques/"
+dimg="images/"
+sons=["proj1.ogg"]
 
 bonuses=[["nb mis",1,imgb1],["speed mis",2,imgb2],["energy+",3,imgb3],["armure+",4,imgb4]]
 
@@ -59,16 +63,19 @@ bosstps.append( [200 ,200 ,imgboss2 ,7   ,0   ,0.01 ,0.4    ,10   ,(135, 12, 122
 
 #                tx  ,ty  ,image    ,vit ,acc  ,tbg ,ttir   ,dgts ,clmis            ,vie   ,vitmis ,nbmis ,txmis ,tymis  ,tpsmis
 
+vanzeta=["vaisseau6-1.png","vaisseau6-2.png","vaisseau6-3.png","vaisseau6-4.png","vaisseau6-5.png","vaisseau6-6.png","vaisseau6-7.png","vaisseau6-8.png","vaisseau6-9.png","vaisseau6-10.png","vaisseau6-11.png"]
+
 vaisseauxtps=[]
-vaisseauxtps.append( ["alpha-0"         ,70   ,70  ,imgv ,3     ,100         ,1000        ,5               ,1            ,5                ,0.5                ,0.1                    ,5         ,0            ,2      ,6     ,-20      ,1      ,1               ,0.01             ,[(0,250,200)]] )
-vaisseauxtps.append( ["alpha-1"         ,70   ,70  ,imgv ,5     ,100         ,2000        ,10              ,1            ,7                ,0.5                ,0.05                   ,6         ,1000         ,2      ,6     ,-20      ,1      ,1               ,0.01             ,[(0,200,150)]] )
-vaisseauxtps.append( ["alpha-10"        ,70   ,70  ,imgv ,5     ,110         ,2500        ,15              ,2            ,10               ,0.7                ,0.01                   ,6         ,5000         ,2      ,7     ,-20      ,1      ,1               ,0.01             ,[(0,0,250)]] )
-vaisseauxtps.append( ["france-ship"     ,80   ,80  ,imgv1,5     ,150         ,5000        ,20              ,3            ,3                ,0.2                ,0.001                  ,10        ,200000       ,6      ,14    ,-15      ,1      ,1               ,0.05             ,[(255,0,0),(0,148,255),(255,255,255)]] )
-vaisseauxtps.append( ["russian-ship"    ,80   ,80  ,imgv2,5     ,150         ,5000        ,35              ,1            ,1                ,0.7                ,0.1                    ,10        ,200000       ,100    ,20    ,-7       ,3      ,3               ,0.03             ,[(255,0,0),(255,255,255),(0,148,255)]] )
-vaisseauxtps.append( ["beta-5"          ,100  ,100 ,imgv ,5     ,200         ,100000      ,10              ,1            ,1                ,0.                 ,0.                     ,7         ,1000000      ,40     ,40    ,-40      ,0.5    ,1               ,0.01             ,[(250,0,0)]] )
-vaisseauxtps.append( ["zeta-100"        ,80   ,80  ,imgv ,7     ,500         ,5000        ,50              ,3            ,15               ,0.2                ,0.01                   ,9         ,1000000000   ,2      ,6     ,-20      ,1      ,1               ,0.01             ,[(250,0,0)]] )
-vaisseauxtps.append( ["el destructor"   ,100  ,100 ,imgv ,10    ,1000        ,10000000    ,100             ,10           ,20               ,0.1                ,0.01                   ,12        ,1000000000000,5      ,5     ,-20      ,1      ,1               ,0.01             ,[(250,0,0)]] )
-#                    0=nom              1=tx 2=ty 3=img 4=vies 5=armure_tot 6=energy_tot 7=missile degats 8=nb missiles 9=nb missiles max 10=vitesse missiles 11=vitesse missiles max 12=vitesse ,13=prix       ,14=mtx ,15=mty,16=vitmis,17=mtps,18=nb mis/valve ,19=tps/mis/valve ,20=couleurs
+vaisseauxtps.append( ["alpha-0"         ,70   ,70  ,["vaisseau.png"] ,3     ,100         ,1000        ,5               ,1            ,5                ,0.5                ,0.1                    ,5         ,0            ,2      ,6     ,-20      ,1      ,1               ,0.01             ,False              ,"proj1.wav" ,1               ,[(0,250,200)]] )
+vaisseauxtps.append( ["alpha-1"         ,70   ,70  ,["vaisseau.png"] ,5     ,100         ,2000        ,10              ,1            ,7                ,0.5                ,0.05                   ,6         ,1000         ,2      ,6     ,-20      ,1      ,1               ,0.01             ,False              ,"proj1.wav" ,1               ,[(0,200,150)]] )
+vaisseauxtps.append( ["alpha-10"        ,70   ,70  ,["vaisseau.png"] ,5     ,110         ,2500        ,15              ,2            ,10               ,0.7                ,0.01                   ,6         ,5000         ,2      ,7     ,-20      ,1      ,1               ,0.01             ,False              ,"proj1.wav" ,1               ,[(0,0,250)]] )
+vaisseauxtps.append( ["france-ship"     ,80   ,80  ,["vaisseau1.png"],5     ,150         ,5000        ,20              ,3            ,3                ,0.2                ,0.001                  ,10        ,200000       ,6      ,14    ,-15      ,1      ,1               ,0.05             ,True               ,"proj1.wav" ,1               ,[(255,0,0),(0,148,255),(255,255,255)]] )
+vaisseauxtps.append( ["russian-ship"    ,80   ,80  ,["vaisseau2.png"],5     ,200         ,5000        ,30              ,1            ,1                ,0.7                ,0.1                    ,7         ,200000       ,100    ,20    ,-7       ,3      ,3               ,0.03             ,True               ,"proj1.wav" ,1               ,[(255,0,0),(255,255,255),(0,148,255)]] )
+vaisseauxtps.append( ["beta-5"          ,100  ,100 ,["vaisseau5.png"],5     ,200         ,100000      ,10              ,1            ,1                ,0.                 ,0.                     ,7         ,1000000      ,20     ,40    ,-40      ,0.5    ,1               ,0.01             ,False              ,None        ,1               ,[(250,0,0)]] )
+vaisseauxtps.append( ["zeta-100"        ,80   ,80  ,vanzeta          ,7     ,500         ,5000        ,50              ,3            ,15               ,0.2                ,0.01                   ,9         ,1000000000   ,2      ,6     ,-20      ,1      ,1               ,0.01             ,False              ,"proj1.wav" ,1               ,[(250,0,0)]] )
+vaisseauxtps.append( ["el destructor"   ,100  ,100 ,["vaisseau3.png"],10    ,1000        ,10000000    ,100             ,10           ,20               ,0.1                ,0.01                   ,12        ,1000000000000,5      ,5     ,-20      ,1      ,1               ,0.01             ,False              ,"proj1.wav" ,1               ,[(250,0,0)]] )
+vaisseauxtps.append( ["le vaisseau éco+",70   ,70  ,["vaisseau4.png"],1     ,60          ,100         ,1               ,1            ,3                ,0.6                ,0.1                    ,3         ,0            ,5      ,5     ,-10      ,1.5    ,2               ,0.05             ,False              ,"proj1.wav" ,2               ,[(200,250,0)]] )
+#                    0=nom              1=tx 2=ty 3=img            4=vies 5=armure_tot 6=energy_tot 7=missile degats 8=nb missiles 9=nb missiles max 10=vitesse missiles 11=vitesse missiles max 12=vitesse ,13=prix       ,14=mtx ,15=mty,16=vitmis,17=mtps,18=nb mis/valve ,19=tps/mis/valve ,20=cl importantes  ,21=sound   ,22=frome mis      ,23=couleurs
 
 cl=[250,0,0]
 for x in range(250*3):
@@ -81,13 +88,10 @@ for x in range(250*3):
     else:
         cl[2]-=1
         cl[0]+=1
-    vaisseauxtps[5][20].append(tuple(cl))
-    vaisseauxtps[6][20].append(tuple(cl))
-    vaisseauxtps[7][20].append(tuple(cl))
+    vaisseauxtps[5][23].append(tuple(cl))
+    vaisseauxtps[6][23].append(tuple(cl))
+    vaisseauxtps[7][23].append(tuple(cl))
 
-
-musiques=["through_space.ogg"]
-dmus="musiques/"
 
 from os.path import expanduser
 home = expanduser("~")
@@ -129,7 +133,7 @@ class Meteor:
 ##############Missile##############
 
 class Missil:
-    def __init__(self,x,y,tx,ty,vitx,vity,dg,pos,tps,cl):
+    def __init__(self,x,y,tx,ty,vitx,vity,dg,pos,tps,cl,forme):
         self.px=x
         self.py=y
         self.tx=tx
@@ -145,6 +149,7 @@ class Missil:
         self.tbg=0.01
         self.rect=pygame.Rect(self.px,self.py,self.tx,self.ty)
         self.cl=cl
+        self.forme=forme
     def update(self,asts,vaisseaux):
         if not self.destroy:
             if time.time()-self.dbg>=self.tbg:
@@ -187,7 +192,9 @@ class Vaisso:
         self.mty=vtp[15]
         self.mvitx=0
         self.mvity=vtp[16]
-        self.mcls=vtp[20]
+        self.isclimpmortant=vtp[20]
+        self.mcls=vtp[23]
+        self.formemis=vtp[22]
         self.dcl=0
         self.mtps=vtp[17]
         self.mce=5
@@ -200,7 +207,6 @@ class Vaisso:
         self.nbmis=vtp[8]
         self.maxnbmis=vtp[9]
         self.amdg=0
-        self.img=pygame.transform.scale(imgv,[self.tx,self.ty])
         self.rect=pygame.Rect(self.px,self.py,self.tx,self.ty)
         self.dbg=time.time()
         self.tbg=0.01
@@ -220,10 +226,17 @@ class Vaisso:
         self.nbregenenergy=0
         self.nbregenarmure=0
         self.argent=0
-        self.image=pygame.transform.scale(vtp[3],[self.tx,self.ty])
+        self.imgs=[]
+        for i in vtp[3]:
+            self.imgs.append( pygame.transform.scale(pygame.image.load(dimg+i),[self.tx,self.ty]) )
+        self.an=0
+        self.dan=time.time()
+        self.tan=0.1
+        self.image=self.imgs[self.an]
         self.dmv=time.time()
         self.tpspmispvalve=vtp[19]
         self.mpva=0
+        self.soundeffect=vtp[21]
     def bouger(self,aa,mis):
         if time.time()-self.dbg>=self.tbg:
             self.dbg=time.time()
@@ -241,11 +254,18 @@ class Vaisso:
                     self.px+=self.vit
         if aa=="Tir":
             self.dapespace=time.time()
-            if time.time()-self.dtir>=self.ttir: self.mpva=0
+            if time.time()-self.dtir>=self.ttir:
+                self.mpva=0
+                if self.isclimpmortant: self.dcl=0
             if (time.time()-self.dtir>=self.ttir or self.mpva<self.nbmpv) and self.energy>self.mce:
                 if time.time()-self.dtir>self.tpsmaxsanstirer: self.tpsmaxsanstirer=time.time()-self.dtir
                 self.dtir=time.time()
                 if self.mpva<self.nbmpv and time.time()-self.dmv>=self.tpspmispvalve:
+                    if self.soundeffect!=None:
+                        try:
+                            effect = pygame.mixer.Sound(dmus+self.soundeffect)
+                            effect.play()
+                        except: pass
                     self.mpva+=1
                     self.dmv=time.time()
                     self.energy-=self.mce
@@ -254,7 +274,7 @@ class Vaisso:
                     for x in range(self.nbmis):
                         self.dcl+=1
                         if self.dcl>=len(self.mcls): self.dcl=0
-                        mis.append(Missil(  self.px+self.tx/divtx*(x+1)-self.mtx/2 , self.py-self.mty  ,self.mtx,self.mty,x-mil,self.mvity,self.mdg,1,self.mtps,self.mcls[self.dcl]))
+                        mis.append(Missil(  self.px+self.tx/divtx*(x+1)-self.mtx/2 , self.py-self.mty  ,self.mtx,self.mty,x-mil,self.mvity,self.mdg,1,self.mtps,self.mcls[self.dcl],self.formemis))
         return mis
 
 class Vsen:
@@ -282,7 +302,7 @@ class Vsen:
             mil=int(self.nbmis/2.)
             divtx=self.nbmis+1
             for x in range(self.nbmis):
-                mis.append( Missil( self.px+self.tx/divtx*(x+1) , self.py+self.ty/2  , self.mtx , self.mty , 0 , self.mvit , self.dg , 0 , self.mtps , self.cl ))
+                mis.append( Missil( self.px+self.tx/divtx*(x+1) , self.py+self.ty/2  , self.mtx , self.mty , 0 , self.mvit , self.dg , 0 , self.mtps , self.cl ,1))
     def bouger(self,mis,vaisseau):
         if time.time()-self.dbg>=self.tbg:
             self.dbg=time.time()
@@ -318,7 +338,7 @@ class Boss:
             mil=int(self.nbmis/2.)
             divtx=self.nbmis+1
             for x in range(self.nbmis):
-                mis.append( Missil( self.px+self.tx/divtx*(x+1) , self.py+self.ty/2  , self.mtx , self.mty , x-mil , self.mvit , self.dg , 2 , self.mtps , self.cl ))
+                mis.append( Missil( self.px+self.tx/divtx*(x+1) , self.py+self.ty/2  , self.mtx , self.mty , x-mil , self.mvit , self.dg , 2 , self.mtps , self.cl ,1))
     def bouger(self,mis,vaisseau):
         if time.time()-self.dbg>=self.tbg:
             self.dbg=time.time()
@@ -375,7 +395,9 @@ def aff(fps,vaisseau,mis,meter,fn1y,fn2y,score,vens,pause,bonus,nv,nben):
         fenetre.blit( imgfond1 , [0,fn1y] )
         fenetre.blit( imgfond2 , [0,fn2y] )
         for m in mis:
-            m.rect=pygame.draw.rect(fenetre,m.cl,(m.px,m.py,m.tx,m.ty),0)
+            if m.forme==1: m.rect=pygame.draw.rect(fenetre,m.cl,(m.px,m.py,m.tx,m.ty),0)
+            elif m.forme==2:
+                m.rect=pygame.draw.ellipse(fenetre,m.cl,(m.px,m.py,m.tx,m.ty),0)
         for b in bonus:
             if b.px>=0-b.tx and b.px <= tex+b.tx and b.py>=0-b.ty and b.py <= tey+b.ty:
                 b.rect=fenetre.blit( b.img , [b.px,b.py] )
@@ -500,6 +522,11 @@ def bbb(score,vaer,fn1y,fn2y,mis,vaisseau,meter,limm,vens,nben,taugen,daugen,pau
     if vaer>=1.:
         if vaisseau.acc<25.: vaisseau.acc+=0.1
         vaer=0.
+    if len(vaisseau.imgs)>1 and time.time()-vaisseau.dan>=vaisseau.tan:
+        vaisseau.dan=time.time()
+        vaisseau.an+=1
+        if vaisseau.an>=len(vaisseau.imgs): vaisseau.an=0
+        vaisseau.image=vaisseau.imgs[vaisseau.an]
     #fond
     fn1y+=float(float(vaisseau.acc)/2.0)
     fn2y+=float(float(vaisseau.acc)/2.0)
@@ -532,7 +559,7 @@ def main_jeu(tpv):
     meter=[]
     #ven
     nben=1
-    taugen=30
+    taugen=20
     daugen=time.time()
     nv=0
     vens=[]
@@ -967,7 +994,7 @@ def aff_menu(menu,j,vr):
         else: txt,cl="acheter "+str(vaisseauxtps[vr][13]),(200,0,0)
         bts[7]=pygame.draw.rect(fenetre,cl,(tex/2-100,tey-50,200,30),0)
         fenetre.blit(font.render(txt,20,(0,0,0)),[tex/2-65,tey-45])
-        fenetre.blit( pygame.transform.scale(vaisseauxtps[vr][3],[150,150]), [tex/2-75,100] )
+        fenetre.blit( pygame.transform.scale(pygame.image.load(dimg+vaisseauxtps[vr][3][0]),[150,150]), [tex/2-75,100] )
         fenetre.blit( font1.render(vaisseauxtps[vr][0],20,(250,250,250)), [tex/2-50,50] )
         fenetre.blit( font.render("vies : "+str(vaisseauxtps[vr][4]),20,(250,250,250)), [tex/2-250,300] )
         fenetre.blit( font.render("armure : "+str(vaisseauxtps[vr][5]),20,(250,250,250)), [tex/2-250,320] )
@@ -988,6 +1015,8 @@ def main_menu(missions):
     encourme=True
     menu=0
     vr=joueur.vaisseauchoisi
+    pygame.mixer.music.load(dmus+random.choice(musiques_menu))
+    pygame.mixer.music.play(-1)
     needtoaff=True
     while encourme:
         if needtoaff:
@@ -1003,11 +1032,15 @@ def main_menu(missions):
                     if b!=None and b.collidepoint(pos):
                         di=bts.index(b)
                         if di==0:
+                            pygame.mixer.music.stop()
                             vaisseau=main_jeu(joueur.vaisseauchoisi)
                             joueur=act_j(joueur,vaisseau)
                             savej(joueur)
                             joueur=verif_missions(joueur,missions)
                             savej(joueur)
+                            pygame.mixer.music.stop()
+                            pygame.mixer.music.load(dmus+random.choice(musiques_menu))
+                            pygame.mixer.music.play(-1)
                         elif di==1: menu=0
                         elif di==2: menu=1
                         elif di==3: menu=2
